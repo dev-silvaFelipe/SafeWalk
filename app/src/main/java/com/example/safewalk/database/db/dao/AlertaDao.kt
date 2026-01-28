@@ -4,18 +4,42 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.safewalk.database.db.entity.AlertaInfraestrutura
+import com.example.safewalk.database.db.entity.enums.StatusAlerta
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AlertaDao {
+
     @Insert
     suspend fun inserir(alerta: AlertaInfraestrutura)
 
-    @Query("SELECT * FROM alertas WHERE ativo =1 ORDER BY createdAt DESC")
-    suspend fun listarAtivos(): List<AlertaInfraestrutura>
+    @Query("""
+        SELECT * FROM alertas 
+        ORDER BY createdAt DESC
+    """)
+    fun listarAlertas(): Flow<List<AlertaInfraestrutura>>
 
-    @Query("UPDATE alertas SET confirmacoes = confirmacoes + 1 WHERE id = :alertaId")
-    suspend fun confrimar(alertaId: Int)
+    @Query("""
+        SELECT * FROM alertas 
+        WHERE status = :status 
+        ORDER BY createdAt DESC
+    """)
+    fun listarPorStatus(status: StatusAlerta): Flow<List<AlertaInfraestrutura>>
 
-    @Query("UPDATE alertas SET ativo = 0 WHERE  id = :alertaId")
-    suspend fun encerrar(alertaId: Int)
+    @Query("""
+        UPDATE alertas 
+        SET confirmacoes = confirmacoes + 1 
+        WHERE id = :alertaId
+    """)
+    suspend fun confirmar(alertaId: Int)
+
+    @Query("""
+        UPDATE alertas 
+        SET status = :status 
+        WHERE id = :alertaId
+    """)
+    suspend fun atualizarStatus(
+        alertaId: Int,
+        status: StatusAlerta
+    )
 }
