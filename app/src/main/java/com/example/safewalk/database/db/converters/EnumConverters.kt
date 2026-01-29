@@ -21,7 +21,7 @@ class EnumConverters {
         return status.name
     }
 
-    @TyperConverter
+    @TypeConverter
     fun toStatusAlerta(valor: String): StatusAlerta{
         return StatusAlerta.valueOf(valor)
     }

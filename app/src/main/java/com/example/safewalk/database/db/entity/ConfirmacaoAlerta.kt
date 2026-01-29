@@ -12,13 +12,13 @@ import androidx.room.PrimaryKey
         ForeignKey(
             entity = AlertaInfraestrutura::class,
             parentColumns = ["id"],
-            childColumns = ["alertaID"],
+            childColumns = ["alertaId"],
                     onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = Usuario::class,
             parentColumns = ["id"],
-            childColumns = ["usuarioI"],
+            childColumns = ["usuarioId"],
             onDelete = ForeignKey.CASCADE
         )
     ],

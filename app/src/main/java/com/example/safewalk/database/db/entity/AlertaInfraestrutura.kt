@@ -9,7 +9,7 @@ import com.example.safewalk.database.db.entity.enums.TipoAlerta
 
 
 @Entity(
-    "alertas",
+    tableName = "alertas",
     foreignKeys = [
         ForeignKey(
             entity = Usuario::class,
@@ -21,8 +21,8 @@ import com.example.safewalk.database.db.entity.enums.TipoAlerta
     indices = [Index(value = ["usuarioId"])]
 )
 data class AlertaInfraestrutura(
-    @PrimaryKey(autoGenerate =true)
-    val id: Int =0,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
 
     val titulo: String,
     val descricao: String,
@@ -32,7 +32,7 @@ data class AlertaInfraestrutura(
 
     val tipo: TipoAlerta,
 
-    val confirmacoes: Int=1,
+    val confirmacoes: Int = 1,
 
     val status: StatusAlerta = StatusAlerta.ATIVO,
 
