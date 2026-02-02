@@ -4,5 +4,6 @@ enum class TipoAlerta {
     ILUMINACAO,
     ASFALTO,
     ESGOTO,
-    VAZAMENTO
+    VAZAMENTO,
+    OUTRO
 }
