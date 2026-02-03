@@ -13,7 +13,7 @@ import com.example.safewalk.database.repository.AlertaRepository
 import com.example.safewalk.viewModel.AlertaViewModel
 import com.example.safewalk.viewModel.factory.AlertaViewModelFactory
 
-class AlertaFragment : Fragment(R.layout.fragment_alerta) {
+class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
 
     private val viewModel: AlertaViewModel by viewModels {
         AlertaViewModelFactory(
