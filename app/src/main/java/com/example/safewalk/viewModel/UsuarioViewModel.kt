@@ -15,4 +15,8 @@ class UsuarioViewModel(
             repository.salvarUsuario(usuario)
         }
     }
+    suspend fun buscarPorTelefone(numTel: String):Usuario?{
+        return repository.buscarPorTelefone(numTel
+        )
+    }
 }
