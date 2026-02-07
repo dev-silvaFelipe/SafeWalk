@@ -48,6 +48,9 @@ android {
         implementation("androidx.activity:activity-ktx:1.9.2")
         implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
+        implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+        implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+
         implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
         implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
 
@@ -63,4 +66,7 @@ android {
         androidTestImplementation("androidx.test.ext:junit:1.2.1")
         androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     }
+}
+dependencies {
+    implementation(libs.play.services.cast.framework)
 }

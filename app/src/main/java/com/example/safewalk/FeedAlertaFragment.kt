@@ -2,13 +2,16 @@ package com.example.safewalk
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.safewalk.database.db.AppDatabase
 import com.example.safewalk.database.repository.AlertaRepository
+import com.example.safewalk.session.SessionManager
 import com.example.safewalk.ui.adapter.AlertaAdapter
 import com.example.safewalk.viewModel.AlertaViewModel
 import com.example.safewalk.viewModel.factory.AlertaViewModelFactory
@@ -29,11 +32,30 @@ class FeedAlertaFragment : Fragment(R.layout.fragment_feed_alertas) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 🔐 Proteção de rota
+        if (SessionManager.usuarioLogadoId == null) {
+            findNavController().navigate(R.id.loginFragment)
+            return
+        }
+
         adapter = AlertaAdapter()
 
         val recycler = view.findViewById<RecyclerView>(R.id.recyclerAlertas)
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = adapter
+
+        val btnLogout = view.findViewById<Button>(R.id.btnLogout)
+        val btnCriar = view.findViewById<Button>(R.id.btnCriar)
+
+        btnCriar.setOnClickListener {
+            findNavController()
+                .navigate(R.id.action_feedAlertasFragment_to_criarAlertaFragment)
+        }
+
+        btnLogout.setOnClickListener {
+            SessionManager.usuarioLogadoId = null
+            findNavController().navigate(R.id.loginFragment)
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.alertas.collect {
@@ -42,4 +64,3 @@ class FeedAlertaFragment : Fragment(R.layout.fragment_feed_alertas) {
         }
     }
 }
-

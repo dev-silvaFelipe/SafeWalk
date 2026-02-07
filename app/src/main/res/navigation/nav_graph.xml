@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.safewalk.LoginFragment"
+        android:label="Login">
+
+        <action
+            android:id="@+id/action_loginFragment_to_feedAlertasFragment"
+            app:destination="@id/feedAlertasFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/feedAlertasFragment"
+        android:name="com.example.safewalk.FeedAlertaFragment"
+        android:label="Feed Alertas">
+
+        <!-- 🔥 ESTA ACTION FALTAVA -->
+        <action
+            android:id="@+id/action_feedAlertasFragment_to_criarAlertaFragment"
+            app:destination="@id/criarAlertaFragment" />
+    </fragment>
+
+    <!-- 🔥 ESTE FRAGMENT FALTAVA -->
+    <fragment
+        android:id="@+id/criarAlertaFragment"
+        android:name="com.example.safewalk.CriarAlertaFragment"
+        android:label="Criar Alerta" />
+
+</navigation>

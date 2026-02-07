@@ -12,6 +12,7 @@ import com.example.safewalk.database.db.entity.enums.TipoAlerta
 import com.example.safewalk.database.repository.AlertaRepository
 import com.example.safewalk.viewModel.AlertaViewModel
 import com.example.safewalk.viewModel.factory.AlertaViewModelFactory
+import com.example.safewalk.session.SessionManager
 
 class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
 
@@ -37,9 +38,10 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
                 latitude = 0.0,
                 longitude = 0.0,
                 tipo = TipoAlerta.OUTRO,
-                usuarioId = 1
+                usuarioId = SessionManager.usuarioLogadoId!!
             )
             viewModel.criarAlerta(alerta)
         }
+
     }
 }
