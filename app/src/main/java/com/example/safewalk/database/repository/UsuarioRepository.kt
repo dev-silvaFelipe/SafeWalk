@@ -10,7 +10,7 @@ class UsuarioRepository (
         usuarioDao.inserir(usuario)
     }
 
-    suspend fun buscarPorTel(numTel: Int): Usuario?{
+    suspend fun buscarPorTelefone(numTel: String): Usuario?{
         return usuarioDao.buscarPorTel(numTel)
     }
 

@@ -19,16 +19,23 @@
         android:name="com.example.safewalk.FeedAlertaFragment"
         android:label="Feed Alertas">
 
-        <!-- 🔥 ESTA ACTION FALTAVA -->
         <action
             android:id="@+id/action_feedAlertasFragment_to_criarAlertaFragment"
             app:destination="@id/criarAlertaFragment" />
     </fragment>
 
-    <!-- 🔥 ESTE FRAGMENT FALTAVA -->
     <fragment
         android:id="@+id/criarAlertaFragment"
         android:name="com.example.safewalk.CriarAlertaFragment"
         android:label="Criar Alerta" />
+    <fragment
+        android:id="@+id/cadastroFragment"
+        android:name="com.example.safewalk.CadastroFragment"
+        android:label="Cadastro" />
+
+    <action
+        android:id="@+id/action_loginFragment_to_cadastroFragment"
+        app:destination="@id/cadastroFragment" />
+
 
 </navigation>

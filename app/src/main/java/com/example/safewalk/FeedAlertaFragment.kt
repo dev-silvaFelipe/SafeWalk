@@ -32,7 +32,6 @@ class FeedAlertaFragment : Fragment(R.layout.fragment_feed_alertas) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 🔐 Proteção de rota
         if (SessionManager.usuarioLogadoId == null) {
             findNavController().navigate(R.id.loginFragment)
             return
