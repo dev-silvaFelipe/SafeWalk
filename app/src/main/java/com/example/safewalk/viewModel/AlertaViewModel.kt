@@ -9,15 +9,17 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class AlertaViewModel (
-    private val repository: AlertaRepository
+    private val repository: AlertaRepository,
+    private val usuarioId: Int
 ): ViewModel() {
     val alertas = repository
-        .listarTodos()
+        .listarPorUsuario(usuarioId)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = emptyList()
         )
+
 
     fun criarAlerta(alerta: AlertaInfraestrutura){
         viewModelScope.launch{

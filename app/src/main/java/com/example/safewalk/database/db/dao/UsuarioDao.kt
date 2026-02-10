@@ -11,6 +11,6 @@ interface UsuarioDao {
     @Insert
     suspend fun inserir(usuario: Usuario)
 
-    @Query("SELECT * FROM usuarios WHERE id = :id LIMIT 1")
-    suspend fun buscarPorId(id: Int): Usuario?
+    @Query("SELECT * FROM usuarios WHERE numTel = :numTel LIMIT 1")
+    suspend fun buscarPorTel(numTel: String): Usuario?
 }

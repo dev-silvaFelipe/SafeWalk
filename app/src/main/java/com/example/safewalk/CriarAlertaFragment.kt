@@ -6,10 +6,12 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.safewalk.database.db.AppDatabase
 import com.example.safewalk.database.db.entity.AlertaInfraestrutura
 import com.example.safewalk.database.db.entity.enums.TipoAlerta
 import com.example.safewalk.database.repository.AlertaRepository
+import com.example.safewalk.session.SessionManager
 import com.example.safewalk.viewModel.AlertaViewModel
 import com.example.safewalk.viewModel.factory.AlertaViewModelFactory
 
@@ -37,9 +39,12 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
                 latitude = 0.0,
                 longitude = 0.0,
                 tipo = TipoAlerta.OUTRO,
-                usuarioId = 1
+                usuarioId = SessionManager.usuarioLogadoId!!
             )
             viewModel.criarAlerta(alerta)
+            findNavController().popBackStack()
+
         }
+
     }
 }

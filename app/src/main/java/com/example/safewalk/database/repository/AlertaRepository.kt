@@ -29,6 +29,9 @@ class AlertaRepository(
     suspend fun encerrarAlerta(alertaId: Int) {
         alertaDao.atualizarStatus(alertaId, StatusAlerta.RESOLVIDO)
     }
+    fun listarPorUsuario(usuarioId: Int): Flow<List<AlertaInfraestrutura>> {
+        return alertaDao.listarPorUsuario(usuarioId)
+    }
 }
 
 
