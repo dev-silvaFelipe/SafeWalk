@@ -6,14 +6,15 @@ import com.example.safewalk.database.repository.AlertaRepository
 import com.example.safewalk.viewModel.AlertaViewModel
 
 class AlertaViewModelFactory(
-    private val repository: AlertaRepository
+    private val repository: AlertaRepository,
+    private val usuarioId: Int
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AlertaViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return AlertaViewModel(repository) as T
+            return AlertaViewModel(repository, usuarioId) as T
         }
-        throw IllegalArgumentException("ViewModel desconhecida")
+        throw IllegalArgumentException("ViewModel desconhecido")
     }
 }
+

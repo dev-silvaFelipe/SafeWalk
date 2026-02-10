@@ -23,9 +23,11 @@ class FeedAlertaFragment : Fragment(R.layout.fragment_feed_alertas) {
         AlertaViewModelFactory(
             AlertaRepository(
                 AppDatabase.getInstance(requireContext()).alertaDao()
-            )
+            ),
+            SessionManager.usuarioLogadoId!!
         )
     }
+
 
     private lateinit var adapter: AlertaAdapter
 
