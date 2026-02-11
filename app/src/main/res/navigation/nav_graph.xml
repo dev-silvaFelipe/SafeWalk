@@ -33,6 +33,11 @@
         android:name="com.example.safewalk.CadastroFragment"
         android:label="Cadastro" />
 
+    <fragment
+        android:id="@+id/mapHeatFragment"
+        android:name="com.example.safewalk.MapsFragment"
+        android:label="Mapa de Alertas" />
+
     <action
         android:id="@+id/action_loginFragment_to_cadastroFragment"
         app:destination="@id/cadastroFragment" />

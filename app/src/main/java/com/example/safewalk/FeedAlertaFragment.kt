@@ -47,7 +47,7 @@ class FeedAlertaFragment : Fragment(R.layout.fragment_feed_alertas) {
 
         val btnLogout = view.findViewById<Button>(R.id.btnLogout)
         val btnCriar = view.findViewById<Button>(R.id.btnCriar)
-
+        val btnMapa = view.findViewById<Button>(R.id.btnMapa)
         btnCriar.setOnClickListener {
             findNavController()
                 .navigate(R.id.action_feedAlertasFragment_to_criarAlertaFragment)
@@ -57,6 +57,10 @@ class FeedAlertaFragment : Fragment(R.layout.fragment_feed_alertas) {
             SessionManager.usuarioLogadoId = null
             findNavController().navigate(R.id.loginFragment)
         }
+        btnMapa.setOnClickListener {
+            findNavController().navigate(R.id.mapHeatFragment)
+        }
+
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.alertas.collect {

@@ -20,6 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <uses-permission android:name="android.permission.INTERNET" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="SUA_API_KEY_AQUI"/>
+
     </application>
 
 </manifest>
