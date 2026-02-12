@@ -1,14 +1,23 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="24dp"
+    android:gravity="center"
+    android:padding="32dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F6FA">
+
+    <TextView
+        android:text="SafeWalk"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <EditText
         android:id="@+id/etTelefone"
         android:hint="Telefone"
-        android:inputType="phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -16,12 +25,14 @@
         android:id="@+id/etSenha"
         android:hint="Senha"
         android:inputType="textPassword"
+        android:layout_marginTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btnLogin"
         android:text="Entrar"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
