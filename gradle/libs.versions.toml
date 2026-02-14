@@ -10,6 +10,7 @@ material = "1.13.0"
 activity = "1.12.2"
 constraintlayout = "2.2.1"
 playServicesCastFramework = "22.2.0"
+playServicesMaps = "20.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -24,6 +25,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version = "2.6.
 room-compiler = { group = "androidx.room", name = "room-compiler", version = "2.6.1" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version = "2.6.1" }
 play-services-cast-framework = { group = "com.google.android.gms", name = "play-services-cast-framework", version.ref = "playServicesCastFramework" }
+play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 
 
 [plugins]
