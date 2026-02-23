@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -50,8 +51,14 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
         btnSalvar.setOnClickListener {
 
             val usuarioId = SessionManager.usuarioLogadoId ?: return@setOnClickListener
-            val lat = latitudeAtual ?: return@setOnClickListener
-            val lng = longitudeAtual ?: return@setOnClickListener
+            val lat = latitudeAtual
+            val lng = longitudeAtual
+
+            if (lat == null || lng == null) {
+                Toast.makeText(requireContext(), "Não foi possível obter a localização.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
 
             val alerta = AlertaInfraestrutura(
                 titulo = etTitulo.text.toString(),
@@ -71,10 +78,13 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestPermissions(
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
                 100
             )
         } else {
@@ -87,14 +97,22 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
-        ) return
+        ) {
+            return
+        }
 
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location ->
                 if (location != null) {
                     latitudeAtual = location.latitude
                     longitudeAtual = location.longitude
+                } else {
+                    Toast.makeText(requireContext(), "Não foi possível obter a localização. Ative a localização do seu dispositivo.", Toast.LENGTH_LONG).show()
+                    findNavController().popBackStack()
                 }
             }
     }
@@ -109,7 +127,9 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
             grantResults[0] == PackageManager.PERMISSION_GRANTED
         ) {
             obterLocalizacao()
+        } else {
+            Toast.makeText(requireContext(), "Permissão de localização negada.", Toast.LENGTH_SHORT).show()
+            findNavController().popBackStack()
         }
     }
 }
-
