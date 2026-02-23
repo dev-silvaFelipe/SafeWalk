@@ -6,6 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.example.safewalk.database.db.entity.enums.StatusAlerta
 import com.example.safewalk.database.db.entity.enums.TipoAlerta
+import java.io.Serializable
 
 
 @Entity(
@@ -39,4 +40,4 @@ data class AlertaInfraestrutura(
     val usuarioId: Int,
 
     val createdAt: Long = System.currentTimeMillis()
-)
+): Serializable

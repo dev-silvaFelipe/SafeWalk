@@ -1,25 +1,98 @@
-<LinearLayout
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#F8FAFC"
+    android:padding="24dp">
 
-    <EditText
-        android:id="@+id/etTitulo"
+    <TextView
+        android:id="@+id/tvNovoAlerta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Reportar Problema"
+        android:textColor="@color/safewalk_dark"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDica"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Descreva o que está acontecendo para que outros cidadãos fiquem atentos."
+        android:textColor="@color/safewalk_text_gray"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvNovoAlerta" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Título do alerta"/>
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintTop_toBottomOf="@id/tvDica">
 
-    <EditText
-        android:id="@+id/etDescricao"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Descrição"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-    <Button
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="O que houve? (Ex: Poste Apagado)"
+                app:boxStrokeColor="@color/safewalk_dark"
+                app:startIconDrawable="@android:drawable/ic_dialog_info">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Detalhes do local ou problema"
+                app:boxStrokeColor="@color/safewalk_dark">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDescricao"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:lines="4" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSalvar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Salvar alerta"/>
-</LinearLayout>
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:text="Publicar Alerta"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/safewalk_dark"
+        app:cornerRadius="12dp"
+        app:icon="@android:drawable/ic_menu_send"
+        app:iconGravity="textStart"
+        app:layout_constraintTop_toBottomOf="@id/cardForm" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

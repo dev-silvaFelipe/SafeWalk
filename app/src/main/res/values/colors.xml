@@ -2,4 +2,5 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="safewalk_dark">#1A1C3D</color> <color name="safewalk_accent">#FAD06C</color> <color name="safewalk_text_gray">#64748B</color>
 </resources>

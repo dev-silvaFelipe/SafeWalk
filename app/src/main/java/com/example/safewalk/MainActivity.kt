@@ -11,9 +11,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val navController = findNavController(R.id.nav_host_fragment)
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         if (SessionManager.usuarioLogadoId != null) {
+            val navController = findNavController(R.id.nav_host_fragment)
+
             navController.navigate(R.id.feedAlertasFragment)
         }
     }
