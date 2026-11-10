@@ -1,4 +1,22 @@
-#SafeWalk
+# SafeWalk — Plataforma Colaborativa de Segurança Urbana
+
+> Projeto acadêmico desenvolvido para a disciplina de Desenvolvimento Móvel do curso de **Análise e Desenvolvimento de Sistemas (ADS)** do **Instituto Federal de Pernambuco (IFPE)**.
+
+---
+
+## 👥 Equipe do Projeto
+* **Felipe Rafael**
+* **João Vitor Revoredo**
+* **Pamela Beatriz**
+
+---
+
+## 📄 Documentação Oficial
+* 📑 **[Documento de Requisitos de Software](file:///c:/Users/Sauter%20Digital/Documents/Projetos/Safewalk/DOCUMENTO_DE_REQUISITOS.md)**
+* 📊 **[Relatório Técnico Final do Projeto](file:///c:/Users/Sauter%20Digital/Documents/Projetos/Safewalk/RELATORIO_PROJETO_FINAL.md)**
+
+---
+
 O SafeWalk nasceu de uma ideia simples: e se a própria comunidade pudesse ajudar a tornar as cidades mais seguras?
 
 O aplicativo é uma plataforma Android focada em segurança colaborativa, onde usuários podem registrar, visualizar e confirmar alertas de incidentes em tempo real através de um mapa interativo.
@@ -71,21 +89,16 @@ arquitetura MVVM na prática
 integração com mapas e geolocalização
 boas práticas de organização de código
 
-🤝 Contribuições
+🤝 Contribuições & Feedback
 
 Sugestões, melhorias e feedbacks são sempre bem-vindos!
 
 Se quiser contribuir:
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature
+3. Abra um Pull Request
 
-Faça um fork do projeto
-
-Crie uma branch para sua feature
-
-Abra um Pull Request 
-
-Ou
-entre em contato comigo Pelo Linkedin:
-Linkedin: https://www.linkedin.com/in/dev-rafael/
+---
 
 📌 Status do Projeto
 
