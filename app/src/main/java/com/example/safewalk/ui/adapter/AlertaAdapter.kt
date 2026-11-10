@@ -9,7 +9,8 @@ import com.example.safewalk.R
 import com.example.safewalk.database.db.entity.AlertaInfraestrutura
 
 class AlertaAdapter (
-    private var alertas: List<AlertaInfraestrutura> = emptyList()
+    private var alertas: List<AlertaInfraestrutura> = emptyList(),
+    private val onItemClick: ((AlertaInfraestrutura) -> Unit)? = null
 ) : RecyclerView.Adapter<AlertaAdapter.AlertaViewHolder>(){
     fun submitList(novaLista: List<AlertaInfraestrutura>){
         alertas = novaLista
@@ -33,6 +34,9 @@ class AlertaAdapter (
         holder.titulo.text = alerta.titulo
         holder.descricao.text = alerta.descricao
         holder.data.text = "Confirmados: ${alerta.confirmacoes}"
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(alerta)
+        }
     }
     override fun getItemCount() = alertas.size
     

@@ -11,6 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class DetalheAlertaBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var alerta: AlertaInfraestrutura
+    var onConfirmarListener: ((Int) -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,15 +33,25 @@ class DetalheAlertaBottomSheet : BottomSheetDialogFragment() {
         view.findViewById<TextView>(R.id.txtStatus)
             .text = alerta.status.name
 
+        val btnConfirmar = view.findViewById<View>(R.id.btnConfirmarAlerta)
+        btnConfirmar?.setOnClickListener {
+            onConfirmarListener?.invoke(alerta.id)
+            dismiss()
+        }
+
         return view
     }
 
     companion object {
-        fun newInstance(alerta: AlertaInfraestrutura): DetalheAlertaBottomSheet {
+        fun newInstance(
+            alerta: AlertaInfraestrutura,
+            onConfirmar: ((Int) -> Unit)? = null
+        ): DetalheAlertaBottomSheet {
             val fragment = DetalheAlertaBottomSheet()
             val args = Bundle()
             args.putSerializable("alerta", alerta)
             fragment.arguments = args
+            fragment.onConfirmarListener = onConfirmar
             return fragment
         }
     }

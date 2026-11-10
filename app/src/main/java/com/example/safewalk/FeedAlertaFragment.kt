@@ -40,7 +40,12 @@ class FeedAlertaFragment : Fragment(R.layout.fragment_feed_alertas) {
             return
         }
 
-        adapter = AlertaAdapter()
+        adapter = AlertaAdapter { alerta ->
+            val detalheSheet = DetalheAlertaBottomSheet.newInstance(alerta) { alertaId ->
+                viewModel.confirmarAlerta(alertaId)
+            }
+            detalheSheet.show(childFragmentManager, "DetalheAlertaBottomSheet")
+        }
 
         val recycler = view.findViewById<RecyclerView>(R.id.recyclerAlertas)
         recycler.layoutManager = LinearLayoutManager(requireContext())
