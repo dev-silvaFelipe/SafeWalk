@@ -17,4 +17,6 @@ local.properties
 .gradle/
 build/
 *.iml
+*.log
+.kotlin/
 
