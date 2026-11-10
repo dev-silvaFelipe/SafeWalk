@@ -2,9 +2,9 @@ package com.example.safewalk
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton // Adicionado
-import com.google.android.material.floatingactionbutton.FloatingActionButton // Adicionado
+import android.widget.ImageButton
+import android.widget.TextView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +19,12 @@ import com.example.safewalk.viewModel.AlertaViewModel
 import com.example.safewalk.viewModel.factory.AlertaViewModelFactory
 import kotlinx.coroutines.launch
 
+/**
+ * FeedAlertaFragment — Tela principal com a lista de alertas.
+ *
+ * Utiliza o layout refinado com header flutuante escuro,
+ * bottom navigation dock e FAB amarelo vibrante.
+ */
 class FeedAlertaFragment : Fragment(R.layout.fragment_feed_alertas) {
 
     private val viewModel: AlertaViewModel by viewModels {
@@ -51,13 +57,15 @@ class FeedAlertaFragment : Fragment(R.layout.fragment_feed_alertas) {
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = adapter
 
-
+        // Botão de logout no header flutuante
         val btnLogout = view.findViewById<ImageButton>(R.id.btnLogout)
 
+        // FAB de criar alerta
         val btnCriar = view.findViewById<FloatingActionButton>(R.id.btnCriar)
 
-        val btnMapa = view.findViewById<Button>(R.id.btnMapa)
-
+        // Aba "Mapa" na bottom navigation dock
+        // O btnMapa agora é um TextView dentro da tab, mas o ID é mantido
+        val btnMapa = view.findViewById<TextView>(R.id.btnMapa)
 
         btnCriar.setOnClickListener {
             findNavController()

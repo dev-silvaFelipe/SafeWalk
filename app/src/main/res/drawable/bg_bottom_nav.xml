@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Background da bottom navigation flutuante (dock) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/sw_bg_elevated" />
+    <corners android:radius="28dp" />
+    <stroke
+        android:width="1dp"
+        android:color="@color/sw_border" />
+</shape>
+

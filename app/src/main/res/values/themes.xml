@@ -1,9 +1,66 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.SafeWalk" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+    <!-- Tema base SafeWalk — Dark Mode forçado -->
+    <style name="Base.Theme.SafeWalk" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Cores primárias do Material 3 -->
+        <item name="colorPrimary">@color/sw_accent</item>
+        <item name="colorOnPrimary">@color/sw_text_on_accent</item>
+        <item name="colorPrimaryContainer">@color/sw_bg_elevated</item>
+        <item name="colorOnPrimaryContainer">@color/sw_accent</item>
+
+        <!-- Cores secundárias -->
+        <item name="colorSecondary">@color/sw_accent</item>
+        <item name="colorOnSecondary">@color/sw_text_on_accent</item>
+        <item name="colorSecondaryContainer">@color/sw_bg_elevated</item>
+        <item name="colorOnSecondaryContainer">@color/sw_text_primary</item>
+
+        <!-- Background e Surface -->
+        <item name="android:colorBackground">@color/sw_bg_primary</item>
+        <item name="colorSurface">@color/sw_bg_surface</item>
+        <item name="colorOnSurface">@color/sw_text_primary</item>
+        <item name="colorSurfaceVariant">@color/sw_bg_elevated</item>
+        <item name="colorOnSurfaceVariant">@color/sw_text_secondary</item>
+
+        <!-- Outline / bordas -->
+        <item name="colorOutline">@color/sw_border</item>
+
+        <!-- Status bar e navigation bar -->
+        <item name="android:statusBarColor">@color/sw_status_bar</item>
+        <item name="android:navigationBarColor">@color/sw_bg_primary</item>
+
+        <!-- TextInputLayout styling -->
+        <item name="textInputStyle">@style/SafeWalk.TextInput</item>
     </style>
 
     <style name="Theme.SafeWalk" parent="Base.Theme.SafeWalk" />
+
+    <!-- Tema da Splash Screen -->
+    <style name="Theme.SafeWalk.Splash" parent="Base.Theme.SafeWalk">
+        <item name="android:windowBackground">@color/sw_bg_primary</item>
+        <item name="android:statusBarColor">@color/sw_bg_primary</item>
+        <item name="android:navigationBarColor">@color/sw_bg_primary</item>
+    </style>
+
+    <!-- Estilo do TextInputLayout para dark mode -->
+    <style name="SafeWalk.TextInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/sw_text_input_stroke</item>
+        <item name="hintTextColor">@color/sw_accent</item>
+        <item name="android:textColorHint">@color/sw_text_hint</item>
+        <item name="boxBackgroundColor">@color/sw_bg_elevated</item>
+        <item name="startIconTint">@color/sw_text_secondary</item>
+        <item name="endIconTint">@color/sw_text_secondary</item>
+    </style>
+
+    <!-- Estilo do BottomSheet -->
+    <style name="SafeWalk.BottomSheet" parent="Widget.Material3.BottomSheet">
+        <item name="backgroundTint">@color/sw_bg_surface</item>
+        <item name="shapeAppearance">@style/SafeWalk.BottomSheet.Shape</item>
+    </style>
+
+    <style name="SafeWalk.BottomSheet.Shape" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerSizeTopLeft">24dp</item>
+        <item name="cornerSizeTopRight">24dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
 </resources>

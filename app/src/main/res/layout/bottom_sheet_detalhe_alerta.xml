@@ -1,60 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- BottomSheet de detalhe do alerta: Dark mode -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="24dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:background="@drawable/bg_dialog_rounded">
 
+    <!-- Handle indicator (barra arrastável) -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:background="@color/sw_border" />
+
+    <!-- Titulo do alerta -->
     <TextView
         android:id="@+id/txtTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/safewalk_dark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/sw_text_primary" />
 
+    <!-- Descricao -->
     <TextView
         android:id="@+id/txtDescricao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textSize="15sp"
-        android:textColor="#334155"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/sw_text_secondary" />
 
-    <TextView
-        android:id="@+id/txtTipo"
+    <!-- Tipo com ícone -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:textSize="14sp"
-        android:textColor="#64748B"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_warning"
+            android:contentDescription="Tipo"
+            app:tint="@color/sw_accent" />
+
+        <TextView
+            android:id="@+id/txtTipo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="14sp"
+            android:textColor="@color/sw_text_secondary" />
+    </LinearLayout>
+
+    <!-- Confirmações -->
     <TextView
         android:id="@+id/txtConfirmacoes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:textColor="@color/safewalk_accent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/sw_accent" />
 
+    <!-- Status -->
     <TextView
         android:id="@+id/txtStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textSize="13sp"
-        android:textColor="#94A3B8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/sw_text_hint" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnConfirmarAlerta"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginTop="20dp"
         android:text="Confirmar Ocorrência"
-        android:backgroundTint="@color/safewalk_accent"
-        app:cornerRadius="12dp" />
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="@color/sw_text_on_accent"
+        android:backgroundTint="@color/sw_accent"
+        app:cornerRadius="16dp" />
 
 </LinearLayout>

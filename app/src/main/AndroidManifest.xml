@@ -17,6 +17,7 @@
         android:theme="@style/Theme.SafeWalk">
         <activity
             android:name=".SplashScreen"
+            android:theme="@style/Theme.SafeWalk.Splash"
             android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />

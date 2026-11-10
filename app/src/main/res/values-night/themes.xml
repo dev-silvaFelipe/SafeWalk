@@ -1,7 +1,27 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.SafeWalk" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <!-- O tema base já é dark mode, então o night theme é idêntico -->
+    <style name="Base.Theme.SafeWalk" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/sw_accent</item>
+        <item name="colorOnPrimary">@color/sw_text_on_accent</item>
+        <item name="colorPrimaryContainer">@color/sw_bg_elevated</item>
+        <item name="colorOnPrimaryContainer">@color/sw_accent</item>
+
+        <item name="colorSecondary">@color/sw_accent</item>
+        <item name="colorOnSecondary">@color/sw_text_on_accent</item>
+        <item name="colorSecondaryContainer">@color/sw_bg_elevated</item>
+        <item name="colorOnSecondaryContainer">@color/sw_text_primary</item>
+
+        <item name="android:colorBackground">@color/sw_bg_primary</item>
+        <item name="colorSurface">@color/sw_bg_surface</item>
+        <item name="colorOnSurface">@color/sw_text_primary</item>
+        <item name="colorSurfaceVariant">@color/sw_bg_elevated</item>
+        <item name="colorOnSurfaceVariant">@color/sw_text_secondary</item>
+
+        <item name="colorOutline">@color/sw_border</item>
+
+        <item name="android:statusBarColor">@color/sw_status_bar</item>
+        <item name="android:navigationBarColor">@color/sw_bg_primary</item>
+
+        <item name="textInputStyle">@style/SafeWalk.TextInput</item>
     </style>
 </resources>

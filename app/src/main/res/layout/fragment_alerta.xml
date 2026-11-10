@@ -1,98 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<!-- Formulario de Criacao de Alerta: Dark mode, glassmorphism no card -->
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8FAFC"
-    android:padding="24dp">
+    android:background="@color/sw_bg_primary"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/tvNovoAlerta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Reportar Problema"
-        android:textColor="@color/safewalk_dark"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvDica"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Descreva o que está acontecendo para que outros cidadãos fiquem atentos."
-        android:textColor="@color/safewalk_text_gray"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvNovoAlerta" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardForm"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="4dp"
-        app:layout_constraintTop_toBottomOf="@id/tvDica">
+        android:padding="24dp">
 
-        <LinearLayout
+        <!-- Titulo da tela -->
+        <TextView
+            android:id="@+id/tvNovoAlerta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Reportar Problema"
+            android:textColor="@color/sw_text_primary"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Dica / descricao -->
+        <TextView
+            android:id="@+id/tvDica"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Descreva o que está acontecendo para que outros cidadãos fiquem atentos."
+            android:textColor="@color/sw_text_secondary"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNovoAlerta" />
+
+        <!-- Card com efeito glassmorphism -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_marginTop="24dp"
+            app:cardBackgroundColor="@color/sw_glass"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/sw_glass_border"
+            app:strokeWidth="1dp"
+            app:layout_constraintTop_toBottomOf="@id/tvDica">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="O que houve? (Ex: Poste Apagado)"
-                app:boxStrokeColor="@color/safewalk_dark"
-                app:startIconDrawable="@android:drawable/ic_dialog_info">
+                android:orientation="vertical"
+                android:padding="20dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etTitulo"
+                <!-- Campo Titulo do alerta -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/SafeWalk.TextInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapSentences" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="O que houve? (Ex: Poste Apagado)"
+                    app:startIconDrawable="@drawable/ic_info"
+                    app:startIconTint="@color/sw_text_secondary">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="Detalhes do local ou problema"
-                app:boxStrokeColor="@color/safewalk_dark">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etTitulo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/sw_text_primary"
+                        android:inputType="textCapSentences" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDescricao"
+                <!-- Campo Descricao -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/SafeWalk.TextInput"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:gravity="top"
-                    android:inputType="textMultiLine"
-                    android:lines="4" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="Detalhes do local ou problema">
 
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDescricao"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:gravity="top"
+                        android:textColor="@color/sw_text_primary"
+                        android:inputType="textMultiLine"
+                        android:lines="4" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSalvar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
-        android:text="Publicar Alerta"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/safewalk_dark"
-        app:cornerRadius="12dp"
-        app:icon="@android:drawable/ic_menu_send"
-        app:iconGravity="textStart"
-        app:layout_constraintTop_toBottomOf="@id/cardForm" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Botao Publicar: amarelo vibrante com ícone vetorial -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSalvar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:text="Publicar Alerta"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/sw_text_on_accent"
+            android:backgroundTint="@color/sw_accent"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_send"
+            app:iconTint="@color/sw_text_on_accent"
+            app:iconGravity="textStart"
+            app:layout_constraintTop_toBottomOf="@id/cardForm" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

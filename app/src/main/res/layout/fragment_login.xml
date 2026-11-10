@@ -1,88 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Tela de Login: Dark mode com destaque amarelo nos CTAs -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/sw_bg_primary"
     android:padding="24dp">
 
+    <!-- Logo pequeno no topo -->
+    <ImageView
+        android:id="@+id/ivLogoLogin"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/ic_safewalk_logo"
+        android:contentDescription="Logo SafeWalk"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Titulo de boas-vindas -->
     <TextView
         android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="24dp"
         android:text="Bem-vindo ao\nSafeWalk"
-        android:textColor="@color/safewalk_dark"
+        android:textColor="@color/sw_text_primary"
         android:textSize="32sp"
         android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/ivLogoLogin" />
 
+    <!-- Subtitulo -->
     <TextView
         android:id="@+id/tvSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Cidades mais seguras começam aqui."
-        android:textColor="@color/safewalk_text_gray"
+        android:textColor="@color/sw_text_secondary"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
 
+    <!-- Campo Telefone -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tlTelefone"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/SafeWalk.TextInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="40dp"
         android:hint="Telefone"
-        android:textColor="@color/safewalk_dark"
-        app:boxStrokeColor="@color/safewalk_dark"
-        app:hintTextColor="@color/safewalk_dark"
         app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
-        app:startIconDrawable="@android:drawable/ic_menu_call">
+        app:startIconDrawable="@drawable/ic_phone"
+        app:startIconTint="@color/sw_text_secondary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTelefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/safewalk_dark"
+            android:textColor="@color/sw_text_primary"
             android:inputType="phone" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Campo Senha -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tlSenha"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/SafeWalk.TextInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="Senha"
-        app:boxStrokeColor="@color/safewalk_dark"
         app:endIconMode="password_toggle"
-        app:hintTextColor="@color/safewalk_dark"
+        app:endIconTint="@color/sw_text_secondary"
         app:layout_constraintTop_toBottomOf="@id/tlTelefone"
-        app:startIconDrawable="@android:drawable/ic_lock_idle_lock">
+        app:startIconDrawable="@drawable/ic_lock"
+        app:startIconTint="@color/sw_text_secondary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/safewalk_dark"
+            android:textColor="@color/sw_text_primary"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Botao Entrar: amarelo vibrante, texto escuro -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="32dp"
         android:text="Entrar"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/safewalk_dark"
+        android:textColor="@color/sw_text_on_accent"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/sw_accent"
         android:insetTop="0dp"
         android:insetBottom="0dp"
-        app:cornerRadius="12dp"
+        app:cornerRadius="16dp"
         app:layout_constraintTop_toBottomOf="@id/tlSenha" />
 
+    <!-- Link para cadastro -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCadastrar"
         style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -90,7 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Não tem uma conta? Cadastre-se"
-        android:textColor="@color/safewalk_dark"
+        android:textColor="@color/sw_accent"
         app:layout_constraintTop_toBottomOf="@id/btnLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

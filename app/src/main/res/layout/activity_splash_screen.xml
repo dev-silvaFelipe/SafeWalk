@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Splash Screen: fundo sólido cinza chumbo, logo central, loading minimalista -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,19 +7,67 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8FAFC"
+    android:background="@color/sw_bg_primary"
     tools:context=".SplashScreen">
 
+    <!-- Logotipo vetorial centralizado em amarelo vibrante -->
     <ImageView
         android:id="@+id/imgLogoSplash"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/splash_screen"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:src="@drawable/ic_safewalk_logo"
         android:contentDescription="Logo SafeWalk"
-        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/tvAppName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <!-- Nome do aplicativo -->
+    <TextView
+        android:id="@+id/tvAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="SafeWalk"
+        android:textColor="@color/sw_text_primary"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.08"
+        android:fontFamily="sans-serif-medium"
+        app:layout_constraintBottom_toTopOf="@id/tvTagline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgLogoSplash" />
+
+    <!-- Tagline -->
+    <TextView
+        android:id="@+id/tvTagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Cidades mais seguras"
+        android:textColor="@color/sw_text_secondary"
+        android:textSize="14sp"
+        android:letterSpacing="0.04"
+        app:layout_constraintBottom_toTopOf="@id/progressSplash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAppName" />
+
+    <!-- Indicador de carregamento minimalista em amarelo -->
+    <ProgressBar
+        android:id="@+id/progressSplash"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="120dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="80dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/sw_accent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tvTagline" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Item de Alerta no RecyclerView: Card escuro glassmorphism, sem emojis -->
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginVertical="8dp"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="6dp"
+    app:cardBackgroundColor="@color/sw_glass"
     app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
-    app:strokeWidth="0dp">
+    app:cardElevation="0dp"
+    app:strokeColor="@color/sw_glass_border"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <!-- Barra lateral de cor funcional -->
         <View
-            android:layout_width="6dp"
+            android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:background="@color/safewalk_accent" />
+            android:background="@color/sw_accent" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -27,6 +31,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Titulo e ícone de alerta -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -38,30 +43,35 @@
                     android:layout_alignParentStart="true"
                     android:layout_toStartOf="@+id/ivAlertIcon"
                     android:text="Buraco na rua"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textColor="@color/sw_text_primary"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
+                <!-- Icone vetorial de alerta -->
                 <ImageView
                     android:id="@+id/ivAlertIcon"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
-                    android:src="@android:drawable/ic_dialog_alert"
-                    app:tint="@color/safewalk_accent" />
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_warning"
+                    android:contentDescription="Alerta"
+                    app:tint="@color/sw_accent" />
             </RelativeLayout>
 
+            <!-- Descricao -->
             <TextView
                 android:id="@+id/tvDescricao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="6dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="Buraco profundo na esquina com a Rua das Flores."
-                android:textColor="#555555"
+                android:textColor="@color/sw_text_secondary"
                 android:textSize="14sp" />
 
+            <!-- Data com ícone vetorial -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,16 +82,17 @@
                 <ImageView
                     android:layout_width="14dp"
                     android:layout_height="14dp"
-                    android:src="@android:drawable/ic_menu_recent_history"
-                    app:tint="@color/safewalk_text_gray" />
+                    android:src="@drawable/ic_schedule"
+                    android:contentDescription="Horário"
+                    app:tint="@color/sw_text_hint" />
 
                 <TextView
                     android:id="@+id/tvData"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="6dp"
                     android:text="Postado hoje"
-                    android:textColor="@color/safewalk_text_gray"
+                    android:textColor="@color/sw_text_hint"
                     android:textSize="12sp" />
             </LinearLayout>
 

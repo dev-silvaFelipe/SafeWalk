@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Cores básicas -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="safewalk_dark">#1A1C3D</color> <color name="safewalk_accent">#FAD06C</color> <color name="safewalk_text_gray">#64748B</color>
+
+    <!-- ========================================= -->
+    <!-- PALETA DARK MODE — SafeWalk               -->
+    <!-- ========================================= -->
+
+    <!-- Backgrounds principais (cinza escuro / chumbo profundo) -->
+    <color name="sw_bg_primary">#FF121212</color>
+    <color name="sw_bg_secondary">#FF1A1A1A</color>
+    <color name="sw_bg_surface">#FF1E1E1E</color>
+    <color name="sw_bg_elevated">#FF252525</color>
+
+    <!-- Accent / CTA — amarelo vibrante / ouro -->
+    <color name="sw_accent">#FFFFD700</color>
+    <color name="sw_accent_pressed">#FFE6C200</color>
+
+    <!-- Textos -->
+    <color name="sw_text_primary">#FFF5F5F5</color>
+    <color name="sw_text_secondary">#FFB0B0B0</color>
+    <color name="sw_text_hint">#FF787878</color>
+    <color name="sw_text_on_accent">#FF121212</color>
+
+    <!-- Bordas e divisores -->
+    <color name="sw_border">#FF333333</color>
+    <color name="sw_divider">#FF2A2A2A</color>
+
+    <!-- Glassmorphism (fundo translúcido para cards) -->
+    <color name="sw_glass">#CC1E1E1E</color>
+    <color name="sw_glass_border">#33FFFFFF</color>
+
+    <!-- Cores funcionais dos marcadores de alerta -->
+    <color name="sw_marker_red">#FFEF4444</color>
+    <color name="sw_marker_orange">#FFFF9800</color>
+    <color name="sw_marker_purple">#FF9C27B0</color>
+    <color name="sw_marker_blue">#FF2196F3</color>
+    <color name="sw_marker_yellow">#FFFFD700</color>
+    <color name="sw_marker_cyan">#FF00BCD4</color>
+
+    <!-- Status bar / Navigation bar -->
+    <color name="sw_status_bar">#FF0D0D0D</color>
+
+    <!-- Cores legadas (mantidas para compatibilidade) -->
+    <color name="safewalk_dark">#FF121212</color>
+    <color name="safewalk_accent">#FFFFD700</color>
+    <color name="safewalk_text_gray">#FFB0B0B0</color>
 </resources>
