@@ -52,7 +52,7 @@ View Binding — acesso tipado aos layouts
 Concorrência
 Kotlin Coroutines para operações assíncronas e acesso ao banco de dados
 Geolocalização
-Google Maps SDK
+osmdroid (OpenStreetMap) — mapa gratuito, sem API Key
 FusedLocationProviderClient para localização precisa do usuário
 
 Funcionalidades
@@ -76,11 +76,9 @@ Lista cronológica com os alertas mais recentes da comunidade.
 1️⃣ Clonar o repositório
 git clone https://github.com/seu-usuario/SafeWalk.git
 
-2️⃣ Configurar a API Key do Google Maps
-Para que o mapa funcione corretamente, é necessário adicionar uma chave da Google Cloud.
-Edite o arquivo local.properties na raiz do projeto.
-Adicione sua chave:
-MAPS_API_KEY="SUA_CHAVE_AQUI"
+2️⃣ Abrir no Android Studio e executar
+O mapa usa OpenStreetMap via osmdroid, então não é preciso criar API Key nem conta de faturamento.
+Basta ter internet no dispositivo para baixar os blocos do mapa.
 
 Objetivo do Projeto
 O SafeWalk também funciona como um projeto de aprendizado e portfólio, explorando:

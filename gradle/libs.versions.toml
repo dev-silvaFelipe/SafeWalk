@@ -11,7 +11,7 @@ material = "1.13.0"
 activity = "1.12.2"
 constraintlayout = "2.2.1"
 playServicesCastFramework = "22.2.0"
-playServicesMaps = "20.0.0"
+osmdroid = "6.1.20"
 playServicesLocation = "21.0.1"
 navigation = "2.7.7"
 lifecycle = "2.8.6"
@@ -31,7 +31,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version = "2.6.
 room-compiler = { group = "androidx.room", name = "room-compiler", version = "2.6.1" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version = "2.6.1" }
 play-services-cast-framework = { group = "com.google.android.gms", name = "play-services-cast-framework", version.ref = "playServicesCastFramework" }
-play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+osmdroid-android = { group = "org.osmdroid", name = "osmdroid-android", version.ref = "osmdroid" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
