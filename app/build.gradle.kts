@@ -62,7 +62,7 @@ dependencies {
     ksp(libs.room.compiler)
 
     implementation(libs.play.services.cast.framework)
-    implementation(libs.play.services.maps)
+    implementation(libs.osmdroid.android)
     implementation(libs.play.services.location)
 
     testImplementation(libs.junit)
