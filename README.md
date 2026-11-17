@@ -52,7 +52,7 @@ View Binding — acesso tipado aos layouts
 Concorrência
 Kotlin Coroutines para operações assíncronas e acesso ao banco de dados
 Geolocalização
-osmdroid (OpenStreetMap) — mapa gratuito, sem API Key
+osmdroid com mapas OpenStreetMap servidos pela CARTO — gratuito para uso não comercial, sem API Key
 FusedLocationProviderClient para localização precisa do usuário
 
 Funcionalidades
