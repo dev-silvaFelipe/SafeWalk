@@ -19,31 +19,32 @@ import com.example.safewalk.database.db.entity.Usuario
         Usuario::class,
         ConfirmacaoAlerta::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
-    @TypeConverters(EnumConverters::class)
+@TypeConverters(EnumConverters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun alertaDao(): AlertaDao
     abstract fun usuarioDao(): UsuarioDao
     abstract fun confirmacaoDao(): ConfirmacaoDao
 
-    companion object{
+    companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
-        
-        fun getInstance(context: Context): AppDatabase{
-            return INSTANCE ?: synchronized(this){
+
+        fun getInstance(context: Context): AppDatabase {
+            return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "safewalk_db"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }
         }
     }
-
 }
