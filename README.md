@@ -52,7 +52,7 @@ View Binding — acesso tipado aos layouts
 Concorrência
 Kotlin Coroutines para operações assíncronas e acesso ao banco de dados
 Geolocalização
-osmdroid com mapas OpenStreetMap servidos pela CARTO — gratuito para uso não comercial, sem API Key
+osmdroid com mapas OpenStreetMap servidos pelo MapTiler (plano gratuito, sem cartão)
 FusedLocationProviderClient para localização precisa do usuário
 
 Funcionalidades
@@ -76,9 +76,11 @@ Lista cronológica com os alertas mais recentes da comunidade.
 1️⃣ Clonar o repositório
 git clone https://github.com/seu-usuario/SafeWalk.git
 
-2️⃣ Abrir no Android Studio e executar
-O mapa usa OpenStreetMap via osmdroid, então não é preciso criar API Key nem conta de faturamento.
-Basta ter internet no dispositivo para baixar os blocos do mapa.
+2️⃣ Configurar a chave gratuita do MapTiler
+Crie uma conta gratuita em https://cloud.maptiler.com (não pede cartão) e copie a chave em "API keys".
+Edite o arquivo local.properties na raiz do projeto e adicione:
+MAPTILER_KEY=SUA_CHAVE_AQUI
+O local.properties não vai para o GitHub, então cada pessoa usa a própria chave.
 
 Objetivo do Projeto
 O SafeWalk também funciona como um projeto de aprendizado e portfólio, explorando:

@@ -21,8 +21,10 @@ import com.example.safewalk.viewModel.factory.MapViewModelFactory
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.launch
 import org.osmdroid.config.Configuration
-import org.osmdroid.tileprovider.tilesource.XYTileSource
+import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
+import org.osmdroid.util.MapTileIndex
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.CopyrightOverlay
 import org.osmdroid.views.overlay.Marker
@@ -56,7 +58,7 @@ class MapsFragment : Fragment(R.layout.fragment_map) {
         val map = view.findViewById<MapView>(R.id.map)
         mapView = map
 
-        map.setTileSource(CARTO_VOYAGER)
+        map.setTileSource(fonteDoMapa())
         map.setMultiTouchControls(true)
         map.overlays.add(CopyrightOverlay(requireContext()))
         map.controller.setZoom(ZOOM_INICIAL)
@@ -77,6 +79,28 @@ class MapsFragment : Fragment(R.layout.fragment_map) {
             userAgentValue = USER_AGENT
             osmdroidBasePath = File(context.filesDir, "osmdroid")
             osmdroidTileCache = File(context.cacheDir, "osmdroid/tiles")
+        }
+    }
+
+    private fun fonteDoMapa(): OnlineTileSourceBase {
+        val chave = BuildConfig.MAPTILER_KEY
+        if (chave.isBlank()) return TileSourceFactory.MAPNIK
+
+        return object : OnlineTileSourceBase(
+            "MapTilerStreets",
+            0,
+            20,
+            256,
+            ".png",
+            arrayOf("https://api.maptiler.com/maps/streets-v2/256/"),
+            "© MapTiler © OpenStreetMap contributors"
+        ) {
+            override fun getTileURLString(pMapTileIndex: Long): String =
+                baseUrl +
+                    MapTileIndex.getZoom(pMapTileIndex) + "/" +
+                    MapTileIndex.getX(pMapTileIndex) + "/" +
+                    MapTileIndex.getY(pMapTileIndex) + mImageFilenameEnding +
+                    "?key=" + chave
         }
     }
 
@@ -180,20 +204,5 @@ class MapsFragment : Fragment(R.layout.fragment_map) {
         private const val ZOOM_INICIAL = 12.0
         private const val ZOOM_USUARIO = 16.0
         private const val USER_AGENT = "SafeWalk/1.0 (+https://github.com/dev-silvaFelipe/SafeWalk)"
-
-        private val CARTO_VOYAGER = XYTileSource(
-            "CartoVoyager",
-            0,
-            20,
-            256,
-            ".png",
-            arrayOf(
-                "https://a.basemaps.cartocdn.com/rastertiles/voyager/",
-                "https://b.basemaps.cartocdn.com/rastertiles/voyager/",
-                "https://c.basemaps.cartocdn.com/rastertiles/voyager/",
-                "https://d.basemaps.cartocdn.com/rastertiles/voyager/"
-            ),
-            "© OpenStreetMap contributors © CARTO"
-        )
     }
 }
