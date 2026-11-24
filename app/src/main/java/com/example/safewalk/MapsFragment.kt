@@ -4,14 +4,19 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.safewalk.database.db.AppDatabase
 import com.example.safewalk.database.db.entity.AlertaInfraestrutura
 import com.example.safewalk.database.db.entity.enums.TipoAlerta
@@ -71,6 +76,18 @@ class MapsFragment : Fragment(R.layout.fragment_map) {
         }
 
         observarAlertas()
+
+        val btnVoltar = view.findViewById<View>(R.id.btnVoltarMapa)
+        btnVoltar.setOnClickListener { findNavController().popBackStack() }
+
+        val margemOriginal = (btnVoltar.layoutParams as ViewGroup.MarginLayoutParams).topMargin
+        ViewCompat.setOnApplyWindowInsetsListener(btnVoltar) { v, insets ->
+            val barraStatus = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top
+            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = margemOriginal + barraStatus
+            }
+            insets
+        }
     }
 
     private fun configurarOsmdroid() {
