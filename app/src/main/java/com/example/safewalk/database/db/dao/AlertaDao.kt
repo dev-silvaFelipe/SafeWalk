@@ -42,6 +42,14 @@ interface AlertaDao {
         alertaId: Int,
         status: StatusAlerta
     )
-    @Query("SELECT * FROM alertas WHERE  usuarioId = :usuarioId ORDER BY createdAt DESC")
+
+    @Query("""
+        SELECT * FROM alertas 
+        WHERE usuarioId = :usuarioId AND status = :status 
+        ORDER BY createdAt DESC
+    """)
+    fun listarPorUsuarioEStatus(usuarioId: Int, status: StatusAlerta): Flow<List<AlertaInfraestrutura>>
+
+    @Query("SELECT * FROM alertas WHERE usuarioId = :usuarioId ORDER BY createdAt DESC")
     fun listarPorUsuario(usuarioId: Int): Flow<List<AlertaInfraestrutura>>
 }

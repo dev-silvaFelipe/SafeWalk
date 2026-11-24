@@ -18,10 +18,20 @@ class MapViewModel(
             SharingStarted.WhileSubscribed(5_000),
             emptyList()
         )
+
     fun confirmarAlerta(alertaId: Int) {
         viewModelScope.launch {
             repository.confirmarAlerta(alertaId)
         }
     }
 
+    /**
+     * Encerra e marca o alerta como RESOLVIDO no banco de dados.
+     * Ação oficial com privilégios da Prefeitura.
+     */
+    fun encerrarAlerta(alertaId: Int) {
+        viewModelScope.launch {
+            repository.encerrarAlerta(alertaId)
+        }
+    }
 }

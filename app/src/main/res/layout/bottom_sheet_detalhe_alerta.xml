@@ -78,6 +78,7 @@
         android:textSize="13sp"
         android:textColor="@color/sw_text_hint" />
 
+    <!-- Botão de apoiar/confirmar para cidadãos -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnConfirmarAlerta"
         android:layout_width="match_parent"
@@ -88,6 +89,23 @@
         android:textStyle="bold"
         android:textColor="@color/sw_text_on_accent"
         android:backgroundTint="@color/sw_accent"
+        app:cornerRadius="16dp" />
+
+    <!-- Botão Exclusivo Prefeitura: Marcar como Resolvido (visibilidade gerenciada via código) -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnResolverAlertaPrefeitura"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="10dp"
+        android:text="Oficializar como Resolvido"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="@color/sw_accent"
+        android:visibility="gone"
+        app:strokeColor="@color/sw_accent"
+        app:icon="@drawable/ic_check"
+        app:iconTint="@color/sw_accent"
         app:cornerRadius="16dp" />
 
 </LinearLayout>

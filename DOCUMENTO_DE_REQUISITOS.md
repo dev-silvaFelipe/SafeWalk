@@ -1,497 +1,542 @@
-# INSTITUTO FEDERAL DE PERNAMBUCO - IFPE
-## ANÁLISE E DESENVOLVIMENTO DE SISTEMAS (ADS)
-### DOCUMENTO DE REQUISITOS DE SOFTWARE
+# UFU-FACOM
+
+# Documento de Requisitos
+
+# SafeWalk
+
+**Versão 1.1 - novembro de 2026**
 
 ---
 
-# SafeWalk — Plataforma Colaborativa de Segurança Urbana
-
-**Versão 1.0** — Novembro de 2026
-
----
-
-## FICHA TÉCNICA
+## Ficha Técnica
 
 ### Equipe Responsável pela Elaboração
-* **Felipe Rafael** — Análise e Desenvolvimento de Sistemas (ADS) / IFPE
-* **João Vitor Revoredo** — Análise e Desenvolvimento de Sistemas (ADS) / IFPE
-* **Pamela Beatriz** — Análise e Desenvolvimento de Sistemas (ADS) / IFPE
 
-### Público Alvo
-Este documento destina-se aos professores avaliadores da disciplina, desenvolvedores e equipe técnica responsáveis pelo projeto, implementação, testes e homologação do aplicativo móvel **SafeWalk**.
+- Felipe Rafael - Desenvolvimento mobile e integração
+- João Vitor Revoredo - Desenvolvimento mobile e dados
+- Pamela Beatriz - Interface e documentação
 
-### Identificação Institucional
-* **Instituição:** Instituto Federal de Educação, Ciência e Tecnologia de Pernambuco (IFPE)
-* **Curso:** Superior de Tecnologia em Análise e Desenvolvimento de Sistemas (ADS)
+### Público-Alvo
 
-*Aviso legal:* Todas as marcas e nomes de produtos (Android, Google Maps, SQLite, Kotlin) pertencem aos seus respectivos proprietários.
+Este documento destina-se à equipe de desenvolvimento, à equipe de avaliação acadêmica, aos usuários testadores e aos responsáveis pela homologação do aplicativo SafeWalk.
 
----
+### Contato Institucional
 
-## SUMÁRIO
-
-1. **INTRODUÇÃO**
-   * 1.1 Visão Geral do Documento
-   * 1.2 Convenções, Termos e Abreviações
-     * 1.2.1 Identificação dos Requisitos
-     * 1.2.2 Prioridades dos Requisitos
-   * 1.3 Referências
-
-2. **CAPÍTULO 1 - DESCRIÇÃO GERAL DO SISTEMA**
-   * 2.1 Propósito e Justificativa do Sistema
-   * 2.2 Arquitetura Geral do Sistema
-   * 2.3 Abrangência e Sistemas Relacionados (Escopo Positivo e Negativo)
-   * 2.4 Descrição dos Usuários
-     * 2.4.1 Cidadão / Pedestre (Usuário Geral)
-     * 2.4.2 Colaborador Ativo (Sentinela Comunitário)
-     * 2.4.3 Administrador / Auditor
-
-3. **CAPÍTULO 2 - REQUISITOS FUNCIONAIS (CASOS DE USO)**
-   * 3.1 Módulo 1: Autenticação e Gestão de Usuários
-     * [RF001] Cadastro de Novo Usuário
-     * [RF002] Autenticação de Usuário (Login)
-     * [RF003] Encerramento de Sessão (Logout)
-   * 3.2 Módulo 2: Gestão e Alimentação de Alertas de Risco
-     * [RF004] Registrar Novo Alerta de Ocorrência / Infraestrutura
-     * [RF005] Listar Alertas Registrados (Feed Principal)
-     * [RF006] Visualizar Detalhes do Alerta
-     * [RF007] Validar / Confirmar Alerta Comunitário
-   * 3.3 Módulo 3: Sensoriamento e Geolocalização Interativa
-     * [RF008] Visualizar Alertas no Mapa Interativo
-     * [RF009] Obter Localização Geográfica Atual via GPS
-
-4. **CAPÍTULO 3 - REQUISITOS NÃO FUNCIONAIS**
-   * 4.1 Usabilidade
-     * [NF001] Interface Acessível e Intuitiva
-     * [NF002] Design Responsivo e Feedbacks Visuais
-   * 4.2 Confiabilidade
-     * [NF003] Persistência Local e Tolerância a Falhas
-     * [NF004] Prevenção de Confirmações Duplicadas
-   * 4.3 Desempenho
-     * [NF005] Tempo de Resposta e Atualização Reativa
-     * [NF006] Otimização de Bateria e Consumo de Localização
-   * 4.4 Segurança
-     * [NF007] Proteção e Hashing de Credenciais
-     * [NF008] Isolamento de Sessão do Usuário
-   * 4.5 Distribuição
-     * [NF009] Empacotamento Autônomo para Plataforma Android
-   * 4.6 Padrões e Boas Práticas
-     * [NF010] Diretrizes Google Material Design 3 e Padrão MVVM
-   * 4.7 Hardware e Software
-     * [NF011] Requisitos de Ambiente de Execução e Sensores
-
-5. **CAPÍTULO 4 - DESCRIÇÃO DA INTERFACE COM O USUÁRIO**
-   * 5.1 [IU001] Tela de Login (`LoginFragment`)
-   * 5.2 [IU002] Tela de Cadastro (`CadastroFragment`)
-   * 5.3 [IU003] Tela Inicial / Feed de Alertas (`FeedAlertaFragment`)
-   * 5.4 [IU004] Tela de Registro de Alerta (`CriarAlertaFragment`)
-   * 5.5 [IU005] Painel Modal de Detalhes do Alerta (`DetalheAlertaBottomSheet`)
-   * 5.6 [IU006] Tela de Mapa Interativo (`MapsFragment`)
+- **Instituição:** Instituto Federal de Educação, Ciência e Tecnologia de Pernambuco (IFPE)
+- **Curso:** Superior de Tecnologia em Análise e Desenvolvimento de Sistemas (ADS)
 
 ---
 
-# INTRODUÇÃO
+# Sumário
 
-Este documento especifica o sistema de software móvel **SafeWalk**, fornecendo à equipe de engenharia e aos avaliadores todas as informações necessárias para o projeto, arquitetura, implementação, testes e homologação da solução.
-
-### 1.1 Visão Geral deste Documento
-Esta introdução estabelece os objetivos e convenções adotadas na especificação. O restante do documento está estruturado conforme as seções a seguir:
-* **Capítulo 1 – Descrição Geral do Sistema:** Contextualiza o propósito do SafeWalk, seus limites de atuação, modelo arquitetural e perfis de usuários.
-* **Capítulo 2 – Requisitos Funcionais (Casos de Uso):** Especifica detalhadamente as funções do sistema organizadas por subseções modulares, com atores, pré-condições, pós-condições, fluxo principal e alternativos.
-* **Capítulo 3 – Requisitos Não Funcionais:** Apresenta restrições de usabilidade, confiabilidade, desempenho, segurança, distribuição, conformidade com padrões e requisitos de hardware/software.
-* **Capítulo 4 – Descrição da Interface com o Usuário:** Documenta o fluxo de navegação, telas, componentes e regras de validação visual.
-
-### 1.2 Convenções, Termos e Abreviações
-A interpretação das diretrizes deste documento obedece às convenções formais estabelecidas a seguir:
-
-#### 1.2.1 Identificação dos Requisitos
-A identificação segue a notação unificada:
-* `[Subseção.RFxxx]` para Requisitos Funcionais (ex.: `[Módulo Alertas.RF004]`).
-* `[Subseção.NFxxx]` para Requisitos Não Funcionais (ex.: `[Confiabilidade.NF003]`).
-* `[IUxxx]` para Interfaces de Usuário (ex.: `[IU003]`).
-
-#### 1.2.2 Prioridades dos Requisitos
-* **Essencial:** Requisito nuclear sem o qual o sistema não entra em operação e não atende aos objetivos fundamentais.
-* **Importante:** Requisito necessário para a operação plena e satisfatória, cuja ausência degrada a experiência do usuário, mas não inviabiliza o fluxo principal.
-* **Desejável:** Requisito complementar ou de refinamento que pode ser diferido para iterações futuras sem prejudicar o funcionamento básico.
-
-### 1.3 Referências
-1. Android Developers Documentation: Architecture Guides & Modern Android Development (MAD). Google, 2026.
-2. Material Design 3 Guidelines: Color, Typography, and Elevation Systems. Google, 2026.
-3. Sommerville, Ian. *Engenharia de Software*. 10ª Edição, Pearson, 2019.
-4. Pressman, Roger S.; Maxim, Bruce R. *Engenharia de Software: Uma Abordagem Profissional*. 8ª Edição, McGraw-Hill, 2016.
+1. **Introdução**
+   - 1.1 Visão geral deste documento
+   - 1.2 Convenções, termos e abreviações
+   - 1.3 Identificação dos requisitos
+   - 1.4 Prioridades dos requisitos
+   - 1.5 Referências
+2. **Capítulo 1 - Descrição Geral do Sistema**
+   - 2.1 Propósito do sistema
+   - 2.2 Arquitetura geral
+   - 2.3 Abrangência e sistemas relacionados
+   - 2.4 Descrição dos usuários
+3. **Capítulo 2 - Requisitos Funcionais**
+   - 3.1 Autenticação e sessão
+   - 3.2 Gestão de alertas
+   - 3.3 Visualização geográfica
+4. **Capítulo 3 - Requisitos Não Funcionais**
+   - 4.1 Usabilidade
+   - 4.2 Confiabilidade
+   - 4.3 Desempenho
+   - 4.4 Segurança
+   - 4.5 Distribuição
+   - 4.6 Padrões
+   - 4.7 Hardware e software
+5. **Capítulo 4 - Descrição da Interface com o Usuário**
+   - 5.1 Interface de login
+   - 5.2 Interface de cadastro
+   - 5.3 Interface do feed
+   - 5.4 Interface de criação de alerta
+   - 5.5 Interface de detalhes
+   - 5.6 Interface do mapa
+6. **Rastreabilidade e Lacunas Identificadas**
 
 ---
 
-# CAPÍTULO 1 - DESCRIÇÃO GERAL DO SISTEMA
+# Introdução
 
-### 2.1 Propósito e Justificativa do Sistema
-O **SafeWalk** é uma plataforma móvel Android de **segurança comunitária colaborativa** que capacita cidadãos a reportar, monitorar e validar incidentes de risco e problemas graves de infraestrutura urbana em tempo real (como vias com iluminação pública inoperante, assaltos recentes, obstáculos intransitáveis, alagamentos e áreas suspeitas). 
+Este documento especifica o aplicativo SafeWalk, fornecendo à equipe de desenvolvimento e à equipe de testes os requisitos necessários para implementação, avaliação e homologação da solução.
 
-Diante da defasagem na comunicação entre os cidadãos e as autoridades sobre os riscos iminentes no espaço público, o SafeWalk transforma informações descentralizadas de cada pedestre em inteligência coletiva, permitindo que qualquer pessoa planeje trajetos mais seguros a pé e tome decisões preventivas.
+## 1.1 Visão geral deste documento
 
-### 2.2 Arquitetura Geral do Sistema
-O aplicativo foi concebido sob o padrão arquitetural **MVVM (Model-View-ViewModel)** em conformidade com as recomendações de *Modern Android Development (MAD)*:
-* **UI Layer (View):** Desenvolvida em arquitetura *Single-Activity* com `MainActivity` orquestrando Fragments via **Android Jetpack Navigation Component**.
-* **State & Presentation Layer (ViewModel):** Gerencia o ciclo de vida dos dados, mantendo estados imutáveis e expondo fluxos reativos (*Kotlin Coroutines StateFlow*).
-* **Data Layer (Repository & Local Database):** Camada de abstração centralizada com **Android Room Persistence Library** sobre banco de dados relacional **SQLite**, garantindo armazenamento local robusto e off-line.
-* **Sensoriamento & Integração Externa:** **Google Play Services Location (FusedLocationProviderClient)** para obtenção precisa das coordenadas do usuário e **Google Maps SDK for Android** para renderização gráfica e espacial de marcadores interativos.
+O documento está organizado da seguinte forma:
 
-```
-       +-------------------------------------------------+
-       |           UI Layer (Fragments / Views)          |
-       |  Login | Feed | Criar Alerta | Detalhes | Mapa  |
-       +-------------------------------------------------+
-                                | (Events / StateFlow)
-                                v
-       +-------------------------------------------------+
-       |      ViewModel Layer (Alerta, Map, Usuario)     |
-       +-------------------------------------------------+
-                                |
-                                v
-       +-------------------------------------------------+
-       |       Repository Layer (AlertaRepository)       |
-       +-------------------------------------------------+
-                 /                               \
-                v                                 v
-   +--------------------------+     +--------------------------+
-   |   Room DB (SQLite Local) |     |  Hardware / GPS Sensors  |
-   |  Usuarios / Alertas /    |     |  FusedLocationClient     |
-   |  Confirmacoes            |     |  Google Maps SDK         |
-   +--------------------------+     +--------------------------+
+- **Seção 2 - Descrição geral do sistema:** apresenta propósito, arquitetura, escopo, sistemas relacionados e perfis de usuários.
+- **Seção 3 - Requisitos funcionais:** apresenta casos de uso com atores, prioridades, entradas, pré-condições, saídas, pós-condições e fluxos.
+- **Seção 4 - Requisitos não funcionais:** apresenta restrições de usabilidade, confiabilidade, desempenho, segurança, distribuição, padrões e ambiente técnico.
+- **Seção 5 - Descrição da interface:** relaciona os requisitos às telas do aplicativo.
+
+## 1.2 Convenções, termos e abreviações
+
+- **APK:** pacote de instalação do Android.
+- **GPS:** sistema de posicionamento global.
+- **MVVM:** Model-View-ViewModel.
+- **Room:** biblioteca de persistência local do Android baseada em SQLite.
+- **OSM:** OpenStreetMap.
+- **Prefeitura:** perfil institucional identificado pela entidade `isPrefeitura = true`.
+- **Alerta:** registro de problema urbano com título, descrição, categoria, coordenadas, status e confirmação.
+- **Toast:** mensagem breve exibida na interface.
+- **Bottom sheet:** painel modal inferior usado para apresentar detalhes.
+
+## 1.3 Identificação dos requisitos
+
+- Requisitos funcionais: `[RFxxx]`.
+- Requisitos não funcionais: `[NFxxx]`.
+- Interfaces: `[IUxxx]`.
+- Fluxos secundários: `FSxx`.
+
+Os identificadores não devem ser reutilizados após a publicação de uma versão.
+
+## 1.4 Prioridades dos requisitos
+
+- **Essencial:** sem o requisito o sistema não cumpre seu objetivo principal.
+- **Importante:** o sistema pode operar, mas com operação não satisfatória ou incompleta.
+- **Desejável:** melhoria que pode ser incluída em versões posteriores.
+
+## 1.5 Referências
+
+1. Android Developers. *Application Fundamentals, Architecture and Jetpack Navigation*. Google, 2026.
+2. Android Developers. *Room Persistence Library*. Google, 2026.
+3. OpenStreetMap Foundation. *Contribuições cartográficas*. 2026.
+4. CARTO. *Mapas de blocos basemaps utilizados pelo osmdroid*. 2026.
+5. Material Design 3. *Componentes e diretrizes de interface*. Google, 2026.
+6. Repositório oficial do projeto SafeWalk: `https://github.com/dev-silvaFelipe/SafeWalk`.
+
+---
+
+# CAPÍTULO 1 - Descrição Geral do Sistema
+
+## 2.1 Propósito do sistema
+
+O SafeWalk é um aplicativo Android para apoio à segurança comunitária e à comunicação de problemas de infraestrutura urbana. O usuário pode cadastrar uma conta, autenticar-se, registrar ocorrências com coordenadas geográficas, consultar alertas ativos, confirmar a persistência de um problema e visualizar ocorrências em uma lista ou em um mapa.
+
+O sistema busca transformar registros individuais em informações coletivas que auxiliem moradores e pedestres na avaliação de riscos e apoiem representantes da prefeitura na identificação e resolução de chamados urbanos.
+
+## 2.2 Arquitetura geral
+
+O aplicativo adota uma arquitetura **MVVM** com uma única `MainActivity` e navegação baseada em Fragments.
+
+- **Camada de interface:** Activities e Fragments.
+- **Camada de apresentação:** `ViewModel` e `StateFlow`.
+- **Camada de dados:** Repositories e DAOs.
+- **Persistência:** Room sobre SQLite.
+- **Localização:** `FusedLocationProviderClient`.
+- **Mapas:** osmdroid com mapa base CARTO Voyager e atribuição ao OpenStreetMap.
+- **Concorrência:** Kotlin Coroutines.
+
+```text
+Fragments / Views
+       |
+ViewModels
+       |
+Repositories
+       |
+Room/SQLite  +  Serviços locais de localização e mapas
 ```
 
-### 2.3 Abrangência e Sistemas Relacionados
+## 2.3 Abrangência e sistemas relacionados
 
-#### 2.3.1 Escopo Positivo (O que o sistema faz):
-* Gerencia o cadastro e login de usuários com identificação de sessão local.
-* Coleta e armazena registros de alertas contendo título, descrição detalhada, coordenadas de latitude/longitude, categoria do incidente e carimbo de data/hora.
-* Exibe a listagem cronológica atualizada dos alertas da região através de uma tela de Feed dinâmica.
-* Apresenta os alertas espacialmente distribuídos em um mapa georreferenciado com marcadores temáticos.
-* Oferece um mecanismo de validação comunitária onde pedestres podem atestar a veracidade de um perigo reportado, incrementando o índice de confiabilidade do alerta.
-* Funciona de maneira autônoma com persistência de dados local no dispositivo.
+### Escopo positivo
 
-#### 2.3.2 Escopo Negativo (O que o sistema não faz):
-* O sistema **não** despacha viaturas policiais, ambulâncias ou equipes de resgate de emergência; para tais situações, o usuário deve acionar os canais telefônicos oficiais (190, 192, 193).
-* O sistema **não** requer conexão contínua com provedor em nuvem para seu núcleo de banco de dados, utilizando o armazenamento relacional interno SQLite (Room) para demonstrar alta performance local e resiliência.
+- Cadastro e login de usuários.
+- Identificação de perfil cidadão ou prefeitura.
+- Persistência local de usuários, alertas e confirmações.
+- Registro de alertas com título, descrição, categoria, coordenadas, data e status.
+- Consulta de alertas ativos.
+- Visualização dos dados em feed e mapa.
+- Confirmação comunitária de alertas.
+- Encerramento de alertas por perfil de prefeitura.
+- Logout e restrição de navegação a usuários autenticados.
 
-### 2.4 Descrição dos Usuários
+### Escopo negativo
 
-#### 2.4.1 Cidadão / Pedestre (Usuário Geral)
-* **Perfil:** Qualquer pessoa que transita pelas vias urbanas a pé ou por transporte público.
-* **Objetivos:** Consultar a lista de alertas e verificar no mapa se seu percurso habitual possui pontos de assalto recente, trechos ermos ou falta de iluminação.
-* **Dificuldades:** Falta de informações prévias sobre áreas de perigo iminente.
+- Não realiza cadastro em serviço de nuvem.
+- Não possui backend compartilhado entre diferentes dispositivos.
+- Não sincroniza dados com órgãos públicos ou sistemas externos.
+- Não realiza chamadas de emergência, despacho de viaturas ou envio de notificações.
+- Não mantém rastreamento contínuo da localização em segundo plano.
+- Não garante login seguro contra ataques externos no estado atual, pois as credenciais são armazenadas localmente.
+- Não realiza autenticação biométrica ou recuperação de senha.
 
-#### 2.4.2 Colaborador Ativo (Sentinela Comunitário)
-* **Perfil:** Moradores de bairros, estudantes universitários e trabalhadores engajados na segurança local.
-* **Objetivos:** Registrar novos alertas com sua localização geográfica imediata e validar alertas abertos por outros moradores para advertir a comunidade.
-* **Dificuldades:** Burocracia em canais públicos de comunicação de perigos.
+O sistema se relaciona com serviços de tiles cartográficos do CARTO/OpenStreetMap e com os provedores de localização do Android. A persistência dos dados ocorre exclusivamente no dispositivo.
 
-#### 2.4.3 Administrador / Auditor
-* **Perfil:** Representantes comunitários ou técnicos de manutenção urbana que utilizam o feed e os dados de confirmação para priorizar demandas públicas.
+## 2.4 Descrição dos usuários
 
----
+### 2.4.1 Cidadão
 
-# CAPÍTULO 2 - REQUISITOS FUNCIONAIS (CASOS DE USO)
+Usuário que cria uma conta, faz login e utiliza o aplicativo para registrar, consultar e confirmar problemas urbanos. O cidadão possui acesso aos alertas ativos criados por ele no feed.
 
-## 3.1 Módulo 1: Autenticação e Gestão de Usuários
+**Principais dificuldades:** não conhecer riscos próximos, localizar problemas que precisam de manutenção e verificar se uma ocorrência ainda persiste.
 
-### [RF001] Cadastro de Novo Usuário
-* **Ator:** Pedestre não cadastrado.
-* **Prioridade:** Essencial.
-* **Interfaces associadas:** [IU002] Tela de Cadastro (`CadastroFragment`).
-* **Entradas e pré-condições:** 
-  * Entradas: Nome completo, número de telefone com DDD e senha de acesso.
-  * Pré-condição: O aplicativo deve estar instalado e o usuário deve acessar o formulário de cadastro.
-* **Saídas e pós-condições:** 
-  * Saídas: Mensagem de confirmação de cadastro e redirecionamento para a tela de autenticação.
-  * Pós-condição: Registro do novo usuário inserido com sucesso na tabela `usuarios` do banco local Room.
+### 2.4.2 Prefeitura
 
-#### Fluxo de eventos principal:
-1. O usuário seleciona a opção "Cadastre-se" na tela de login.
-2. O sistema apresenta o formulário de cadastro [IU002].
-3. O usuário insere nome, telefone e senha, e aciona o botão "Cadastrar".
-4. O sistema valida se todos os campos obrigatórios foram preenchidos.
-5. O sistema registra o usuário no banco de dados local.
-6. O sistema exibe mensagem de sucesso e redireciona o usuário para a tela de Login [IU001].
+Usuário institucional identificado como perfil oficial. Consulta todos os alertas ativos, confirma chamadas e pode alterar o status de um alerta para `RESOLVIDO`.
 
-#### Fluxos secundários:
-* **FS01 - Campos em branco:** Caso o usuário submeta o formulário com algum campo vazio, o sistema exibe mensagem de alerta no campo correspondente e impede a inserção no banco de dados.
+**Principais dificuldades:** priorizar chamados urbanos e acompanhar registros da cidade.
+
+### 2.4.3 Usuário não autenticado
+
+Pessoa que ainda não fez login ou cujo cadastro não existe. O usuário pode acessar apenas as telas de login e cadastro e não pode operar o feed, o mapa ou a criação de alertas.
 
 ---
 
-### [RF002] Autenticação de Usuário (Login)
-* **Ator:** Usuário previamente cadastrado.
-* **Prioridade:** Essencial.
-* **Interfaces associadas:** [IU001] Tela de Login (`LoginFragment`).
-* **Entradas e pré-condições:**
-  * Entradas: Número de telefone e senha.
-  * Pré-condição: Existência de cadastro prévio.
-* **Saídas e pós-condições:**
-  * Saídas: Redirecionamento para a tela principal (Feed de Alertas [IU003]).
-  * Pós-condição: `SessionManager` atualizado com o `id` do usuário autenticado.
+# CAPÍTULO 2 - Requisitos Funcionais
 
-#### Fluxo de eventos principal:
-1. O usuário informa o número de telefone e senha cadastrados.
-2. O usuário clica no botão "Entrar".
-3. O sistema consulta as credenciais na tabela de usuários.
-4. Ao verificar a correspondência exata, o sistema grava o identificador na sessão ativa (`SessionManager.usuarioLogadoId`).
-5. O sistema redireciona a navegação para o Feed de Alertas [IU003].
+## 3.1 Autenticação e sessão
 
-#### Fluxos secundários:
-* **FS01 - Credenciais inválidas:** Caso o telefone não exista ou a senha não coincida, o sistema exibe notificação via Toast ("Credenciais inválidas") e mantém o usuário na tela de login.
+### [RF001] Cadastro de usuário
 
----
+- **Ator:** Cidadão não autenticado.
+- **Prioridade:** Essencial.
+- **Interface associada:** `[IU002]`.
+- **Entradas:** nome, telefone e senha.
+- **Pré-condições:** o usuário está na tela de cadastro.
+- **Saídas:** confirmação de cadastro e retorno à tela de login.
+- **Pós-condição:** um registro é inserido na tabela `usuarios` com perfil cidadão.
 
-### [RF003] Encerramento de Sessão (Logout)
-* **Ator:** Usuário logado.
-* **Prioridade:** Importante.
-* **Interfaces associadas:** [IU003] Tela de Feed (`FeedAlertaFragment`).
-* **Entradas e pré-condições:**
-  * Entradas: Clique no botão de logout no cabeçalho.
-  * Pré-condição: Usuário com sessão ativa.
-* **Saídas e pós-condições:**
-  * Saídas: Navegação de retorno para a Tela de Login [IU001].
-  * Pós-condição: Identificador de sessão apagado (`SessionManager.usuarioLogadoId = null`).
+#### Fluxo principal
 
-#### Fluxo de eventos principal:
-1. O usuário aciona o ícone de logout no canto superior direito do Feed.
-2. O sistema invalida o token de sessão local.
-3. O sistema redireciona imediatamente para o fluxo inicial de login [IU001].
+1. O usuário seleciona “Cadastre-se”.
+2. Informa nome, telefone e senha.
+3. Seleciona “Cadastrar”.
+4. O sistema cria o usuário no banco Room.
+5. O sistema informa o sucesso e retorna à tela de login.
 
----
+#### Fluxos secundários
 
-## 3.2 Módulo 2: Gestão e Alimentação de Alertas de Risco
+- **FS01 - Campos vazios:** o cadastro não é concluído e o usuário recebe a mensagem correspondente.
+- **FS02 - Retorno à aplicação:** o sistema pode encerrar o cadastro sem persistir dados.
 
-### [RF004] Registrar Novo Alerta de Ocorrência / Infraestrutura
-* **Ator:** Colaborador Ativo / Cidadão autenticado.
-* **Prioridade:** Essencial.
-* **Interfaces associadas:** [IU004] Tela de Cadastro de Alerta (`CriarAlertaFragment`).
-* **Entradas e pré-condições:**
-  * Entradas: Título do incidente, descrição circunstanciada, categoria (ex.: Iluminação Ruim, Assalto, Obstáculo, Outro).
-  * Pré-condição: Usuário autenticado e permissão de GPS concedida.
-* **Saídas e pós-condições:**
-  * Saídas: Alerta gravado com sucesso, retorno automático ao Feed.
-  * Pós-condição: Novo registro na tabela `alertas` contendo latitude, longitude e carimbo temporal.
+### [RF002] Login de usuário
 
-#### Fluxo de eventos principal:
-1. Na tela principal, o usuário clica no botão flutuante de criação (+).
-2. O sistema requisita as coordenadas mais recentes do dispositivo ao sensor de geolocalização.
-3. O usuário preenche o título e a descrição do incidente.
-4. O usuário clica no botão "Salvar".
-5. O sistema vincula as coordenadas obtidas, o ID do usuário da sessão e persiste a entidade `AlertaInfraestrutura`.
-6. O sistema exibe notificação de confirmação e retorna à tela anterior.
+- **Ator:** Cidadão cadastrado.
+- **Prioridade:** Essencial.
+- **Interface associada:** `[IU001]`.
+- **Entradas:** telefone e senha.
+- **Pré-condições:** cadastro existente no banco local.
+- **Saídas:** navegação para o feed e atualização da sessão.
+- **Pós-condição:** `SessionManager.usuarioLogadoId`, `usuarioLogadoNome` e `isPrefeitura` são atualizados.
 
-#### Fluxos secundários:
-* **FS01 - Indisponibilidade de coordenadas GPS:** Caso o sensor não forneça latitude/longitude válidas, o sistema emite alerta ("Não foi possível obter a localização") e impede a gravação até que o GPS estabilize.
+#### Fluxo principal
 
----
+1. O usuário informa telefone e senha.
+2. Seleciona “Entrar”.
+3. O sistema compara os dados com o registro local.
+4. Em caso válido, salva o usuário na sessão.
+5. O sistema navega para o feed.
 
-### [RF005] Listar Alertas Registrados (Feed Principal)
-* **Ator:** Cidadão autenticado.
-* **Prioridade:** Essencial.
-* **Interfaces associadas:** [IU003] Feed de Alertas (`FeedAlertaFragment`).
-* **Entradas e pré-condições:**
-  * Entradas: Nenhuma entrada direta (carregamento automático da base de dados).
-  * Pré-condição: Usuário logado.
-* **Saídas e pós-condições:**
-  * Saídas: Lista ordenada de cards contendo título, descrição prévia e número de confirmações comunitárias.
-  * Pós-condição: Exibição reativa atualizada via `StateFlow` e `RecyclerView`.
+#### Fluxo secundário
 
-#### Fluxo de eventos principal:
-1. O usuário acessa a aplicação ou retorna de uma ação.
-2. O `AlertaViewModel` consulta o `AlertaRepository`.
-3. O repositório emite um fluxo contínuo dos alertas cadastrados.
-4. O `AlertaAdapter` renderiza os cartões dinamicamente no `RecyclerView`.
+- **FS01 - Credenciais inválidas:** o sistema exibe “Telefone ou senha inválidos” e permanece no login.
+- **FS02 - Campos vazios:** o sistema solicita o preenchimento de telefone e senha.
 
----
+### [RF003] Login de prefeitura
 
-### [RF006] Visualizar Detalhes do Alerta
-* **Ator:** Cidadão autenticado.
-* **Prioridade:** Essencial.
-* **Interfaces associadas:** [IU005] Modal de Detalhes (`DetalheAlertaBottomSheet`).
-* **Entradas e pré-condições:**
-  * Entradas: Toque em um cartão do feed de alertas ou no marcador do mapa.
-  * Pré-condição: Lista de alertas carregada na interface.
-* **Saídas e pós-condições:**
-  * Saídas: Apresentação da tela/modal detalhada exibindo: Título completo, Descrição rica, Tipo classificado, Total acumulado de confirmações e Status do incidente (ATIVO / RESOLVIDO).
-  * Pós-condição: Nenhuma alteração de estado no banco de dados.
+- **Ator:** Representante de prefeitura.
+- **Prioridade:** Importante.
+- **Interface associada:** `[IU001]`.
+- **Entradas:** seleção do botão de acesso à prefeitura.
+- **Pré-condições:** banco local disponível.
+- **Saídas:** sessão configurada como prefeitura.
+- **Pós-condição:** o usuário oficial existente é localizado ou criado localmente.
 
-#### Fluxo de eventos principal:
-1. O usuário navega pelo Feed de Alertas [IU003] ou pelo Mapa [IU006].
-2. O usuário toca no card ou no marcador correspondente.
-3. O sistema abre o painel modal [IU005] recebendo o objeto serializado `AlertaInfraestrutura`.
-4. Os dados completos são exibidos para leitura do usuário.
-5. O usuário fecha o painel arrastando para baixo ou tocando fora da área modal.
+#### Fluxo principal
 
----
+1. O usuário seleciona “Prefeitura”.
+2. O sistema obtém ou cria o usuário oficial com telefone `0800156`.
+3. A sessão é marcada como prefeitura.
+4. O sistema abre o feed com todos os alertas ativos.
 
-### [RF007] Validar / Confirmar Alerta Comunitário
-* **Ator:** Cidadão / Colaborador autenticado.
-* **Prioridade:** Importante.
-* **Interfaces associadas:** [IU005] Modal de Detalhes / Mapa (`AlertaDetalheBottomSheet`).
-* **Entradas e pré-condições:**
-  * Entradas: Clique no botão "Confirmar Alerta".
-  * Pré-condição: Alerta ativo existente e usuário não ter confirmado o mesmo alerta anteriormente.
-* **Saídas e pós-condições:**
-  * Saídas: Atualização visual imediata do contador de confirmações.
-  * Pós-condição: Registro inserido na tabela relacional `confirmacoes` e incremento no campo `confirmacoes` da tabela `alertas`.
+### [RF004] Logout
 
-#### Fluxo de eventos principal:
-1. Ao inspecionar os detalhes do alerta, o usuário clica no botão "Confirmar Alerta".
-2. O sistema registra a validação com a chave única composta `(alertaId, usuarioId)`.
-3. O sistema incrementa a contagem de confirmações.
-4. O painel modal fecha e os marcadores/cards refletem a nova confiabilidade.
+- **Ator:** Usuário autenticado.
+- **Prioridade:** Essencial.
+- **Interface associada:** `[IU003]`.
+- **Entradas:** acionamento do botão Sair.
+- **Pré-condições:** sessão ativa.
+- **Saídas:** retorno à tela de login.
+- **Pós-condição:** todos os dados da sessão em memória são limpos.
 
----
+## 3.2 Gestão de alertas
 
-## 3.3 Módulo 3: Sensoriamento e Geolocalização Interativa
+### [RF005] Registrar alerta
 
-### [RF008] Visualizar Alertas no Mapa Interativo
-* **Ator:** Cidadão autenticado.
-* **Prioridade:** Importante (Funcionalidade de Alto Valor).
-* **Interfaces associadas:** [IU006] Mapa de Alertas (`MapsFragment`).
-* **Entradas e pré-condições:**
-  * Entradas: Ação do usuário ao tocar no botão "Ver Mapa".
-  * Pré-condição: Chave da Google Maps API configurada e sinal de internet para download de azulejos cartográficos.
-* **Saídas e pós-condições:**
-  * Saídas: Mapa do Google renderizado com marcadores vermelhos em cada ponto de incidente.
-  * Pós-condição: Câmera centralizada na posição atual ou nos incidentes.
+- **Ator:** Cidadão ou prefeitura autenticados.
+- **Prioridade:** Essencial.
+- **Interface associada:** `[IU004]`.
+- **Entradas:** título/problema selecionado, descrição opcional e coordenadas obtidas pelo dispositivo.
+- **Pré-condições:** usuário autenticado e localização disponível ou obtida pelo sistema.
+- **Saídas:** alerta persistido e retorno ao feed.
+- **Pós-condição:** novo registro criado em `alertas` com status `ATIVO`, uma confirmação inicial e data/hora atual.
 
-#### Fluxo de eventos principal:
-1. O usuário toca no botão "Ver Mapa" presente no Feed.
-2. O sistema inicializa o `SupportMapFragment`.
-3. O mapa carrega e consome a lista de alertas via `MapViewModel`.
-4. Cada alerta gera um `Marker` na coordenada exata de latitude e longitude.
-5. Ao tocar em qualquer marcador, o sistema abre o modal de detalhes do alerta.
+#### Fluxo principal
 
----
+1. O usuário seleciona o botão de novo alerta no feed.
+2. O sistema solicita as permissões de localização, quando necessárias.
+3. O usuário seleciona ou informa o problema e pode adicionar detalhes.
+4. O usuário seleciona “Publicar Chamado”.
+5. O sistema obtém latitude e longitude e salva o alerta.
+6. O sistema informa o sucesso e retorna ao feed.
 
-### [RF009] Obter Localização Geográfica Atual via GPS
-* **Ator:** Sistema operacional Android / Usuário.
-* **Prioridade:** Essencial.
-* **Interfaces associadas:** [IU004] e [IU006].
-* **Entradas e pré-condições:**
-  * Entradas: Sinal dos satélites GPS / Redes celulares do dispositivo móvel.
-  * Pré-condição: Permissão `ACCESS_FINE_LOCATION` concedida pelo usuário.
-* **Saídas e pós-condições:**
-  * Saídas: Objeto `Location` com latitude e longitude de precisão métrica.
+#### Fluxos secundários
 
----
+- **FS01 - Permissão negada:** o sistema não obtém coordenadas e impede o registro.
+- **FS02 - Localização ainda indisponível:** o sistema informa que está aguardando coordenadas.
+- **FS03 - Título vazio:** o sistema impede o registro.
+- **FS04 - Descrição vazia:** o sistema grava “Sem observações adicionais.”
+- **FS05 - Localização nula em emulador:** o sistema utiliza a posição padrão de Recife definida pelo aplicativo.
 
-# CAPÍTULO 3 - REQUISITOS NÃO FUNCIONAIS
+### [RF006] Consultar feed de alertas
 
-### 4.1 Usabilidade
-* **[Usabilidade.NF001] Design Acessível e Intuitivo**
-  * Prioridade: Essencial.
-  * Descrição: A interface deve adotar contraste cromático adequado (fundo neutro claro `#F8FAFC`, cartões brancos com acentos em azul `#2563EB` e escuro `#1E293B`), textos de no mínimo 14sp legíveis à luz do dia, ícones autoexplicativos e áreas de toque com no mínimo 48x48dp para todos os botões.
-* **[Usabilidade.NF002] Feedback Visual Imediato**
-  * Prioridade: Importante.
-  * Descrição: Qualquer operação submetida pelo usuário (como login, gravação de alerta ou confirmação) deve produzir resposta visual imediata na forma de animações de transição, snackbars ou toasts.
+- **Ator:** Usuário autenticado.
+- **Prioridade:** Essencial.
+- **Interface associada:** `[IU003]`.
+- **Entradas:** nenhuma entrada direta.
+- **Pré-condições:** sessão ativa.
+- **Saídas:** lista de alertas ativos ordenada da ocorrência mais recente para a mais antiga.
+- **Pós-condição:** os cartões são atualizados automaticamente em caso de alteração no banco.
 
-### 4.2 Confiabilidade
-* **[Confiabilidade.NF003] Persistência Segura e Tolerância a Falhas**
-  * Prioridade: Essencial.
-  * Descrição: As transações de dados devem ser gerenciadas pelo framework Room (SQLite) com propriedades ACID, assegurando que interrupções de processo ou término repentino da bateria não corrompam os dados armazenados.
-* **[Confiabilidade.NF004] Prevenção de Confirmações Duplicadas**
-  * Prioridade: Importante.
-  * Descrição: O banco de dados deve impor uma restrição de integridade relacional unívoca (`Index(alertaId, usuarioId, unique = true)`), impedindo que um mesmo usuário vote múltiplas vezes no mesmo alerta para fraudar métricas.
+#### Regra por perfil
 
-### 4.3 Desempenho
-* **[Desempenho.NF005] Tempo de Resposta e Atualização Reativa**
-  * Prioridade: Essencial.
-  * Descrição: A transição de telas e a atualização da lista de alertas no RecyclerView devem ocorrer em menos de 100 milissegundos após a alteração no banco local, através do uso de corrotinas assíncronas do Kotlin.
-* **[Desempenho.NF006] Otimização de Consumo de Bateria**
-  * Prioridade: Importante.
-  * Descrição: O uso de sensores de GPS deve ser pontual, requisitando a última localização conhecida via `FusedLocationProviderClient` somente no instante da criação do alerta ou abertura do mapa, cessando o rastreamento em segundo plano para preservar a carga da bateria.
+- Cidadão: consulta somente os alertas ativos criados pelo próprio usuário.
+- Prefeitura: consulta todos os alertas ativos da cidade armazenados no dispositivo.
 
-### 4.4 Segurança
-* **[Segurança.NF007] Proteção de Credenciais**
-  * Prioridade: Essencial.
-  * Descrição: O sistema não deve expor a senha do usuário em texto plano na interface e deve armazenar o campo hash no banco de dados local.
-* **[Segurança.NF008] Isolamento de Sessão**
-  * Prioridade: Importante.
-  * Descrição: Nenhuma tela interna (Feed, Cadastro de Alerta, Detalhes ou Mapa) pode ser acessada sem que haja um usuário ativo no `SessionManager`. Caso o usuário não esteja logado, a navegação é imediatamente redirecionada para a tela de Login.
+### [RF007] Visualizar detalhes do alerta
 
-### 4.5 Distribuição
-* **[Distribuição.NF009] Empacotamento Autônomo para Android**
-  * Prioridade: Essencial.
-  * Descrição: O sistema deve ser gerado no formato padrão `.apk` assinado, permitindo a instalação direta em qualquer aparelho Android ou via emulador do Android Studio sem dependências de servidores proprietários instalados à parte.
+- **Ator:** Usuário autenticado.
+- **Prioridade:** Essencial.
+- **Interface associada:** `[IU005]`.
+- **Entradas:** toque em cartão do feed ou marcador do mapa.
+- **Pré-condições:** alerta ativo disponível.
+- **Saídas:** título, descrição, categoria, quantidade de confirmações e status.
+- **Pós-condição:** o estado do alerta não é alterado ao apenas visualizar.
 
-### 4.6 Padrões
-* **[Padrões.NF010] Aderência ao Google Material Design 3 e Arquitetura Android**
-  * Prioridade: Essencial.
-  * Descrição: O código fonte deve seguir rigorosamente as convenções de nomenclatura oficiais da linguagem Kotlin, padrões de pacotes estruturados por camadas (`ui`, `viewModel`, `database`) e especificações de design do Material 3.
+### [RF008] Confirmar alerta
 
-### 4.7 Hardware e Software
-* **[Hardware/Software.NF011] Requisitos de Sistema Operacional e Dispositivo**
-  * Prioridade: Essencial.
-  * Descrição: O aplicativo é compatível com dispositivos que executem Android 8.0 (API nível 26) ou superior, com capacidade mínima de 2GB de RAM, sensor de GPS integrado e suporte ao Google Play Services.
+- **Ator:** Cidadão ou prefeitura autenticados.
+- **Prioridade:** Importante.
+- **Interface associada:** `[IU005]`.
+- **Entradas:** seleção do botão de confirmação.
+- **Pré-condições:** alerta existente e usuário autenticado.
+- **Saídas:** incremento visual da quantidade de confirmações.
+- **Pós-condição:** o contador `confirmacoes` do alerta é incrementado.
+
+**Observação atual de implementação:** a entidade `ConfirmacaoAlerta` possui chave única composta, mas o fluxo ativo não utiliza essa entidade nem uma verificação por usuário antes do incremento; portanto, confirmações sucessivas pelo mesmo usuário ainda podem incrementar o contador. A prevenção efetiva de duplicidade deve ser implementada antes de considerar este requisito plenamente atendido.
+
+### [RF009] Encerrar alerta
+
+- **Ator:** Prefeitura autenticada.
+- **Prioridade:** Essencial.
+- **Interface associada:** `[IU005]`.
+- **Entradas:** seleção de “Oficializar como Resolvido”.
+- **Pré-condições:** perfil prefeitura e alerta ativo.
+- **Saídas:** mensagem de resolução e remoção do alerta da consulta ativa.
+- **Pós-condição:** status do alerta alterado para `RESOLVIDO`.
+
+## 3.3 Visualização geográfica
+
+### [RF010] Visualizar alertas no mapa
+
+- **Ator:** Usuário autenticado.
+- **Prioridade:** Essencial.
+- **Interface associada:** `[IU006]`.
+- **Entradas:** botão “Mapa”.
+- **Pré-condições:** conexão disponível para carregar os tiles cartográficos e banco com alertas.
+- **Saídas:** mapa interativo com marcadores.
+- **Pós-condição:** o mapa mostra os alertas ativos observados pelo `MapViewModel`.
+
+#### Fluxo principal
+
+1. O usuário seleciona “Mapa”.
+2. O sistema inicializa o osmdroid com o mapa base CARTO Voyager.
+3. O sistema observa os alertas ativos.
+4. Cada alerta é representado por um marcador na latitude e longitude cadastradas.
+5. Ao tocar no marcador, o sistema abre o painel de detalhes.
+
+### [RF011] Obter localização atual
+
+- **Ator:** Sistema e usuário.
+- **Prioridade:** Essencial.
+- **Interface associada:** `[IU004]` e `[IU006]`.
+- **Entradas:** permissão do usuário e sensores de localização.
+- **Pré-condições:** `ACCESS_FINE_LOCATION` ou `ACCESS_COARSE_LOCATION` disponível.
+- **Saídas:** latitude e longitude.
+- **Pós-condição:** a criação usa as coordenadas atuais; o mapa centraliza e exibe a posição do usuário.
+
+#### Fluxos secundários
+
+- **FS01 - Permissão negada:** localização não é ativada.
+- **FS02 - Localização indisponível:** o sistema informa o estado ao usuário ou usa o fallback previsto no fluxo de criação.
 
 ---
 
-# CAPÍTULO 4 - DESCRIÇÃO DA INTERFACE COM O USUÁRIO
+# CAPÍTULO 3 - Requisitos Não Funcionais
 
-### 5.1 [IU001] Tela de Login (`LoginFragment`)
-* **Propósito:** Permitir o acesso de usuários já cadastrados ao ambiente do SafeWalk.
-* **Componentes:**
-  * Logotipo do aplicativo SafeWalk e subtítulo institucional.
-  * Campo de entrada para Telefone com máscara numérica.
-  * Campo de entrada para Senha com máscara de caracteres ocultos.
-  * Botão de ação primária "Entrar" estilizado.
-  * Botão secundário de redirecionamento "Criar Conta".
-* **Críticas da Interface:**
-  * Validação de campo não vazio para ambos os inputs.
-  * Bloqueio de submissão enquanto os campos não estiverem preenchidos.
+## 4.1 Usabilidade
 
-### 5.2 [IU002] Tela de Cadastro (`CadastroFragment`)
-* **Propósito:** Registrar novos pedestres e colaboradores no sistema.
-* **Componentes:**
-  * Campos de texto com contorno: Nome Completo, Telefone, Senha.
-  * Botão "Cadastrar" em destaque.
-  * Botão de retorno à tela de login.
-* **Críticas da Interface:**
-  * O número de telefone deve conter no mínimo 10 dígitos.
-  * A senha deve conter pelo menos 4 caracteres.
+### [NF001] Interface intuitiva
 
-### 5.3 [IU003] Tela Inicial / Feed de Alertas (`FeedAlertaFragment`)
-* **Propósito:** Tela Home do aplicativo que lista as ocorrências cadastradas e centraliza as ações de navegação.
-* **Componentes:**
-  * Cabeçalho escuro (`#1E293B`) com o título "Alertas Próximos" e botão de Logout.
-  * Botão "Ver Mapa" no cabeçalho com ícone indicativo.
-  * `RecyclerView` dinâmico renderizando os cartões de alerta [IU005].
-  * Cada cartão (`item_alerta.xml`) exibe: Barra lateral colorida de identificação, Título em negrito, Descrição truncada em 2 linhas, Ícone de alerta temático e Contador de confirmações.
-  * Botão de Ação Flutuante (FAB) verde/azul no canto inferior direito para cadastrar novo alerta.
-* **Comportamento Interativo:**
-  * Toque em qualquer cartão abre instantaneamente a Tela de Detalhes (`DetalheAlertaBottomSheet`).
-  * Toque no FAB abre a Tela de Cadastro de Alerta.
-  * Toque em "Ver Mapa" abre a Tela de Mapa Interativo.
+- **Prioridade:** Essencial.
+- **Descrição:** os elementos devem possuir rótulos claros, contraste adequado, componentes Material 3, área de toque apropriada e navegação reconhecível.
+- **Caso(s) de uso associado(s):** todos.
 
-### 5.4 [IU004] Tela de Cadastro de Alerta (`CriarAlertaFragment`)
-* **Propósito:** Execução de uma ação útil e interativa: submeter um alerta georreferenciado para a comunidade.
-* **Componentes:**
-  * Campo de texto: Título do Alerta.
-  * Campo de texto multilinha: Descrição do Incidente.
-  * Botão "Salvar Alerta".
-* **Críticas da Interface:**
-  * Validação de obrigatoriedade dos campos de texto.
-  * Exigência de permissão de GPS concedida para capturar coordenadas reais.
+### [NF002] Feedback do usuário
 
-### 5.5 [IU005] Painel Modal de Detalhes do Alerta (`DetalheAlertaBottomSheet`)
-* **Propósito:** Apresentar a visão pormenorizada de um incidente selecionado.
-* **Componentes:**
-  * Título em tamanho destacado (18sp, negrito).
-  * Descrição detalhada do risco.
-  * Categoria/Tipo do alerta.
-  * Indicador de Confirmações Comunitárias com badge numérico.
-  * Status da ocorrência (ex.: "ATIVO").
-  * Botão de ação "Confirmar Alerta" para incrementar a confiabilidade comunitária.
+- **Prioridade:** Essencial.
+- **Descrição:** ações concluídas ou inválidas devem apresentar feedback por Toast ou alteração imediata da interface.
+- **Caso(s) de uso associado(s):** `[RF001]` a `[RF011]`.
 
-### 5.6 [IU006] Tela de Mapa Interativo (`MapsFragment`)
-* **Propósito:** Exibir a distribuição espacial dos alertas sobre o mapa urbano da cidade.
-* **Componentes:**
-  * Camada do Google Maps em tela cheia.
-  * Marcadores (pins) posicionados na latitude e longitude de cada registro.
-  * Habilitação da camada da posição atual do usuário com ponto azul.
-  * Janela de detalhes e BottomSheet ativada ao clicar em qualquer marcador.
+## 4.2 Confiabilidade
 
+### [NF003] Persistência local
+
+- **Prioridade:** Essencial.
+- **Descrição:** usuários e alertas devem permanecer persistidos no SQLite por meio do Room até serem removidos ou o banco ser desinstalado/limpo.
+
+### [NF004] Integridade das confirmações
+
+- **Prioridade:** Essencial.
+- **Descrição:** a regra de negócio deve impedir que o mesmo usuário confirme o mesmo alerta mais de uma vez.
+- **Estado:** requisito parcialmente implementado. Existe chave única composta na entidade `ConfirmacaoAlerta`, mas não há persistência dessa confirmação no fluxo atual.
+
+## 4.3 Desempenho
+
+### [NF005] Atualização reativa
+
+- **Prioridade:** Importante.
+- **Descrição:** alterações em usuários e alertas devem ser refletidas por Fluxos do Room e `StateFlow` sem atualizações manualmente recorrentes da tela.
+
+### [NF006] Consumo de localização
+
+- **Prioridade:** Importante.
+- **Descrição:** a localização deve ser solicitada sob demanda na criação do alerta ou na abertura do mapa. O aplicativo não deve manter rastreamento em segundo plano.
+
+## 4.4 Segurança
+
+### [NF007] Proteção de credenciais
+
+- **Prioridade:** Essencial.
+- **Descrição:** o sistema deve evitar que a senha seja exibida em texto claro na interface. Deve armazenar credenciais com derivação segura e não de forma reversível.
+- **Estado:** não atendido. Atualmente o campo `senhaHash` recebe e compara diretamente a senha digitada.
+
+### [NF008] Controle de acesso por perfil
+
+- **Prioridade:** Essencial.
+- **Descrição:** apenas a prefeitura deve visualizar e ativar o controle de resolução; telas internas não podem ser abertas sem sessão ativa.
+- **Estado:** restrição atual implementada em memória pelo `SessionManager` e pelo flag `isPrefeitura`.
+
+### [NF009] Permissões Android
+
+- **Prioridade:** Essencial.
+- **Descrição:** o aplicativo deve solicitar localização apenas quando necessário e continuar operacional quando a permissão não for concedida.
+
+## 4.5 Distribuição
+
+### [NF010] Pacote Android
+
+- **Prioridade:** Essencial.
+- **Descrição:** o sistema deve poder ser instalado como aplicativo Android em dispositivo ou emulador compatível.
+
+## 4.6 Padrões
+
+### [NF011] Arquitetura MVVM
+
+- **Prioridade:** Essencial.
+- **Descrição:** o código deve separar interface, apresentação e acesso a dados conforme os padrões da arquitetura MVVM.
+
+### [NF012] Navegação e componentes
+
+- **Prioridade:** Importante.
+- **Descrição:** a navegação deve utilizar Android Jetpack Navigation e os componentes visuais devem seguir Material Design.
+
+## 4.7 Hardware e software
+
+### [NF013] Plataforma mínima
+
+- **Prioridade:** Essencial.
+- **Descrição:** executar em Android com `minSdk` 24 e `targetSdk` 36.
+
+### [NF014] Recursos do dispositivo
+
+- **Prioridade:** Essencial.
+- **Descrição:** exige conexão de dados para baixar o mapa, armazenamento disponível para Room e cache dos tiles e localização por GPS/rede quando disponível.
+
+---
+
+# CAPÍTULO 4 - Descrição da Interface com o Usuário
+
+## 5.1 [IU001] Tela de Login
+
+Apresenta campos de telefone e senha, botão “Entrar”, botão de cadastro e acesso rápido “Prefeitura”.
+
+### Críticas da interface
+
+- Os campos devem ser associados a teclado adequado.
+- Senhas devem ser ocultadas.
+- Erros de autenticação não devem revelar se o telefone ou a senha está incorreto separadamente.
+
+## 5.2 [IU002] Tela de Cadastro
+
+Apresenta campos de nome, telefone e senha e botão “Cadastrar”.
+
+## 5.3 [IU003] Tela do Feed
+
+Apresenta cabeçalho com perfil, botão de logout, lista de cards de alertas ativos, botão flutuante de criação e navegação para o mapa.
+
+### Regras visuais
+
+- Cidadão exibe alertas criados pelo usuário.
+- Prefeitura exibe todos os alertas ativos e identifica o perfil no cabeçalho.
+- Alertas `RESOLVIDO` não aparecem no feed ativo.
+
+## 5.4 [IU004] Tela de Criação de Alerta
+
+Apresenta seleção padronizada de problemas, campo de detalhes e botão “Publicar Chamado”.
+
+### Categorias visíveis
+
+Iluminação, asfalto, esgoto, vazamento e outros problemas de infraestrutura. Internamente, o aplicativo converte essas opções em `TipoAlerta`.
+
+## 5.5 [IU005] Painel de Detalhes
+
+Apresenta título, descrição, tipo, confirmações e status. Para a prefeitura, também apresenta o botão de resolução.
+
+## 5.6 [IU006] Mapa
+
+Exibe mapa baseado em tiles CARTO Voyager, controle multitouch, posição do usuário e marcadores coloridos por tipo de alerta.
+
+### Cores de marcadores
+
+- Vermelho: asfalto.
+- Amarelo: iluminação.
+- Laranja: esgoto.
+- Roxo: vazamento.
+- Ciano: outro problema.
+
+---
+
+# Rastreabilidade e Lacunas Identificadas
+
+| Requisito | Escopo do sistema | Estado atual |
+|---|---|---|
+| RF001-RF004 | Cadastro, login, prefeitura e logout | Implementado localmente |
+| RF005-RF007 | Criação, consulta e detalhes de alertas | Implementado |
+| RF008 | Confirmação comunitária | Implementado apenas como incremento, sem persistência por usuário |
+| RF009 | Encerramento pela prefeitura | Implementado |
+| RF010-RF011 | Mapa e localização | Implementado com osmdroid e Play Services |
+| NF004 | Prevenção de confirmações duplicadas | Parcial |
+| NF007 | Hash seguro de senha | Não implementado |
+| NF008 | Controle de sessão/perfil | Implementado em memória; não equivale a segurança de backend |
+| NF010-NF014 | Distribuição, padrões e ambiente | Implementado ou especificado |
+
+O documento cobre o escopo implementado e explicita os pontos que ainda não possuem conformidade completa.

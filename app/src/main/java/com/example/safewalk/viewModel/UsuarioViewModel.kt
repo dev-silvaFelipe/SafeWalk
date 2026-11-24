@@ -20,7 +20,8 @@ class UsuarioViewModel(
             val usuario = Usuario(
                 nome = nome,
                 numTel = telefone,
-                senhaHash = senha
+                senhaHash = senha,
+                isPrefeitura = false
             )
             repository.salvarUsuario(usuario)
             onResult()
@@ -39,6 +40,16 @@ class UsuarioViewModel(
             } else {
                 onResult(null)
             }
+        }
+    }
+
+    /**
+     * Efetua o login direto como Prefeitura Municipal utilizando o perfil pré-selecionado.
+     */
+    fun loginPrefeitura(onResult: (Usuario) -> Unit) {
+        viewModelScope.launch {
+            val prefeitura = repository.obterOuCriarPrefeitura()
+            onResult(prefeitura)
         }
     }
 }

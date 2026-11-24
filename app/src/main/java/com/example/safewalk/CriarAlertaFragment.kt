@@ -6,6 +6,8 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -34,6 +36,13 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.chip.ChipGroup
 import kotlinx.coroutines.launch
 
+/**
+ * CriarAlertaFragment — Tela para abertura de novos chamados de infraestrutura urbana.
+ *
+ * Oferece uma lista pré-selecionada de ocorrências categorizadas de acordo com
+ * as atribuições de obras, iluminação e saneamento da prefeitura municipal,
+ * permitindo ao mesmo tempo personalização do texto.
+ */
 class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
 
     private val viewModel: AlertaViewModel by viewModels {
@@ -41,13 +50,15 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
             AlertaRepository(
                 AppDatabase.getInstance(requireContext()).alertaDao()
             ),
-            SessionManager.usuarioLogadoId!!
+            SessionManager.usuarioLogadoId ?: 0,
+            SessionManager.isPrefeitura
         )
     }
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var geocodificador: Geocodificador
 
+    private lateinit var chipGroupTipo: ChipGroup
     private lateinit var toggleLocal: MaterialButtonToggleGroup
     private lateinit var grupoEndereco: View
     private lateinit var etEndereco: EditText
@@ -57,6 +68,25 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
     private var latitudeSelecionada: Double? = null
     private var longitudeSelecionada: Double? = null
     private var cancelamentoGps: CancellationTokenSource? = null
+
+    // Lista padronizada de ocorrências típicas de infraestrutura urbana municipal (frases claras e sem barras '/')
+    private val problemasInfraestrutura = listOf(
+        "Poste Apagado na Via Pública",
+        "Falha na Iluminação Pública",
+        "Lâmpada Acesa Durante o Dia",
+        "Buraco no Asfalto",
+        "Pavimentação Asfáltica Danificada",
+        "Calçada Intransitável ou com Desnível",
+        "Bueiro Entupido",
+        "Boca de Lobo Obstruída",
+        "Esgoto a Céu Aberto",
+        "Vazamento de Água Potável na Via",
+        "Árvore com Risco de Queda",
+        "Necessidade de Poda Urgente",
+        "Semáforo Apagado ou com Defeito",
+        "Placa de Trânsito Danificada",
+        "Outro Problema de Infraestrutura Urbana"
+    )
 
     private val pedirPermissaoLocalizacao =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { resultado ->
@@ -78,16 +108,32 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         geocodificador = Geocodificador(requireContext())
 
-        val etTitulo = view.findViewById<EditText>(R.id.etTitulo)
+        val actvTitulo = view.findViewById<AutoCompleteTextView>(R.id.actvTitulo)
         val etDescricao = view.findViewById<EditText>(R.id.etDescricao)
-        val chipGroupTipo = view.findViewById<ChipGroup>(R.id.chipGroupTipo)
         val btnSalvar = view.findViewById<Button>(R.id.btnSalvar)
 
+        chipGroupTipo = view.findViewById(R.id.chipGroupTipo)
         toggleLocal = view.findViewById(R.id.toggleLocal)
         grupoEndereco = view.findViewById(R.id.grupoEndereco)
         etEndereco = view.findViewById(R.id.etEndereco)
         btnBuscarEndereco = view.findViewById(R.id.btnBuscarEndereco)
         tvLocalSelecionado = view.findViewById(R.id.tvLocalSelecionado)
+
+        // Configuração do adaptador para a lista suspensa pré-selecionada
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.item_dropdown_infraestrutura,
+            problemasInfraestrutura
+        )
+        actvTitulo.setAdapter(adapter)
+
+        // Pré-seleciona a ocorrência mais comum de infraestrutura municipal
+        actvTitulo.setText(problemasInfraestrutura.first(), false)
+        marcarTipo(mapearTipoAlerta(problemasInfraestrutura.first()))
+
+        actvTitulo.setOnItemClickListener { _, _, posicao, _ ->
+            marcarTipo(mapearTipoAlerta(adapter.getItem(posicao).orEmpty()))
+        }
 
         toggleLocal.addOnButtonCheckedListener { _, botaoId, marcado ->
             if (!marcado) return@addOnButtonCheckedListener
@@ -116,14 +162,14 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
         usarLocalizacaoAtual()
 
         btnSalvar.setOnClickListener {
-
             val usuarioId = SessionManager.usuarioLogadoId ?: return@setOnClickListener
-            val titulo = etTitulo.text.toString().trim()
+            val tituloDigitado = actvTitulo.text.toString().trim()
+            val descricaoDigitada = etDescricao.text.toString().trim()
             val lat = latitudeSelecionada
             val lng = longitudeSelecionada
 
-            if (titulo.isEmpty()) {
-                etTitulo.error = "Informe o que houve"
+            if (tituloDigitado.isEmpty()) {
+                Toast.makeText(requireContext(), "Por favor, selecione ou informe o que houve.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -131,35 +177,61 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
                 val mensagem = if (modoEndereco()) {
                     "Busque e confirme o endereço antes de publicar."
                 } else {
-                    "Ainda não foi possível obter sua localização."
+                    "Aguardando coordenadas de GPS... Certifique-se de que a localização está ativada ou digite o endereço."
                 }
                 Toast.makeText(requireContext(), mensagem, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             val alerta = AlertaInfraestrutura(
-                titulo = titulo,
-                descricao = etDescricao.text.toString().trim(),
+                titulo = tituloDigitado,
+                descricao = if (descricaoDigitada.isNotEmpty()) descricaoDigitada else "Sem observações adicionais.",
                 latitude = lat,
                 longitude = lng,
-                tipo = tipoSelecionado(chipGroupTipo.checkedChipId),
+                tipo = tipoSelecionado(),
                 usuarioId = usuarioId
             )
 
             viewModel.criarAlerta(alerta)
+            Toast.makeText(requireContext(), "Chamado registrado no mapa com sucesso!", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
         }
     }
 
-    private fun modoEndereco(): Boolean = toggleLocal.checkedButtonId == R.id.btnLocalEndereco
+    /**
+     * Mapeia automaticamente a ocorrência selecionada para a categoria funcional do mapa.
+     */
+    private fun mapearTipoAlerta(opcao: String): TipoAlerta {
+        val texto = opcao.lowercase()
+        return when {
+            texto.contains("iluminação") || texto.contains("poste") || texto.contains("lâmpada") -> TipoAlerta.ILUMINACAO
+            texto.contains("asfalto") || texto.contains("buraco") || texto.contains("calçada") || texto.contains("pavimentação") -> TipoAlerta.ASFALTO
+            texto.contains("esgoto") || texto.contains("bueiro") || texto.contains("boca de lobo") -> TipoAlerta.ESGOTO
+            texto.contains("vazamento") || texto.contains("água") -> TipoAlerta.VAZAMENTO
+            else -> TipoAlerta.OUTRO
+        }
+    }
 
-    private fun tipoSelecionado(chipId: Int): TipoAlerta = when (chipId) {
+    private fun marcarTipo(tipo: TipoAlerta) {
+        val chipId = when (tipo) {
+            TipoAlerta.ILUMINACAO -> R.id.chipIluminacao
+            TipoAlerta.ASFALTO -> R.id.chipAsfalto
+            TipoAlerta.ESGOTO -> R.id.chipEsgoto
+            TipoAlerta.VAZAMENTO -> R.id.chipVazamento
+            TipoAlerta.OUTRO -> R.id.chipOutro
+        }
+        chipGroupTipo.check(chipId)
+    }
+
+    private fun tipoSelecionado(): TipoAlerta = when (chipGroupTipo.checkedChipId) {
         R.id.chipIluminacao -> TipoAlerta.ILUMINACAO
         R.id.chipAsfalto -> TipoAlerta.ASFALTO
         R.id.chipEsgoto -> TipoAlerta.ESGOTO
         R.id.chipVazamento -> TipoAlerta.VAZAMENTO
         else -> TipoAlerta.OUTRO
     }
+
+    private fun modoEndereco(): Boolean = toggleLocal.checkedButtonId == R.id.btnLocalEndereco
 
     private fun limparLocalSelecionado() {
         latitudeSelecionada = null

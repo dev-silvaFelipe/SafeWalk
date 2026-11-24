@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ícone vetorial representando órgão público / prefeitura -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M12,1L2,6v2h20V6L12,1zM4,19h16v2H4V19zM6,10h2v7H6V10zM11,10h2v7h-2V10zM16,10h2v7h-2V10z" />
+</vector>
+

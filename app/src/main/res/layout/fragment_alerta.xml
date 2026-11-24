@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Formulario de Criacao de Alerta: Dark mode, glassmorphism no card -->
+<!-- Formulario de Criacao de Alerta: Dark mode, selecao pre-definida de infraestrutura -->
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Reportar Problema"
+            android:text="Reportar Falha Urbana"
             android:textColor="@color/sw_text_primary"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -33,7 +33,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Descreva o que está acontecendo para que outros cidadãos fiquem atentos."
+            android:text="Selecione o tipo de ocorrência de acordo com os serviços da prefeitura e detalhe a localização."
             android:textColor="@color/sw_text_secondary"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,30 +59,36 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
-                <!-- Campo Titulo do alerta -->
+                <!-- Campo Selecao de Problema de Infraestrutura Municipal (Pre-selecionado) -->
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/SafeWalk.TextInput"
+                    android:id="@+id/tlTitulo"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="O que houve? (Ex: Poste Apagado)"
+                    android:hint="Problema de infraestrutura"
+                    app:boxBackgroundColor="@color/sw_bg_elevated"
+                    app:boxStrokeColor="@color/sw_text_input_stroke"
                     app:startIconDrawable="@drawable/ic_info"
                     app:startIconTint="@color/sw_text_secondary">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etTitulo"
+                    <AutoCompleteTextView
+                        android:id="@+id/actvTitulo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/sw_text_primary"
-                        android:inputType="textCapSentences" />
+                        android:textSize="14sp"
+                        android:inputType="textCapSentences"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Campo Descricao -->
+                <!-- Campo Descricao detalhada -->
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/SafeWalk.TextInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Detalhes do local ou problema">
+                    android:hint="Ponto de referência ou detalhes adicionais">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etDescricao"
@@ -231,13 +237,13 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Botao Publicar: amarelo vibrante com ícone vetorial -->
+        <!-- Botao Publicar Alerta -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSalvar"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="32dp"
-            android:text="Publicar Alerta"
+            android:text="Publicar Chamado"
             android:textAllCaps="false"
             android:textSize="16sp"
             android:textStyle="bold"

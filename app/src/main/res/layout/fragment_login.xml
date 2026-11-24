@@ -1,117 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Tela de Login: Dark mode com destaque amarelo nos CTAs -->
-<androidx.constraintlayout.widget.ConstraintLayout
+<!-- Tela de Login: Dark mode com suporte a Cidadão e Acesso Prefeitura -->
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/sw_bg_primary"
-    android:padding="24dp">
+    android:fillViewport="true">
 
-    <!-- Logo pequeno no topo -->
-    <ImageView
-        android:id="@+id/ivLogoLogin"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="48dp"
-        android:src="@drawable/ic_safewalk_logo"
-        android:contentDescription="Logo SafeWalk"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Titulo de boas-vindas -->
-    <TextView
-        android:id="@+id/tvWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Bem-vindo ao\nSafeWalk"
-        android:textColor="@color/sw_text_primary"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-medium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivLogoLogin" />
-
-    <!-- Subtitulo -->
-    <TextView
-        android:id="@+id/tvSubtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Cidades mais seguras começam aqui."
-        android:textColor="@color/sw_text_secondary"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
-
-    <!-- Campo Telefone -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tlTelefone"
-        style="@style/SafeWalk.TextInput"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="Telefone"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
-        app:startIconDrawable="@drawable/ic_phone"
-        app:startIconTint="@color/sw_text_secondary">
+        android:padding="24dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etTelefone"
+        <!-- Logo no topo -->
+        <ImageView
+            android:id="@+id/ivLogoLogin"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="36dp"
+            android:src="@drawable/ic_safewalk_logo"
+            android:contentDescription="Logo SafeWalk"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Titulo de boas-vindas -->
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Bem-vindo ao\nSafeWalk"
+            android:textColor="@color/sw_text_primary"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivLogoLogin" />
+
+        <!-- Subtitulo -->
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Cidades mais seguras começam aqui."
+            android:textColor="@color/sw_text_secondary"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
+
+        <!-- Campo Telefone -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlTelefone"
+            style="@style/SafeWalk.TextInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/sw_text_primary"
-            android:inputType="phone" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="28dp"
+            android:hint="Telefone"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+            app:startIconDrawable="@drawable/ic_phone"
+            app:startIconTint="@color/sw_text_secondary">
 
-    <!-- Campo Senha -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tlSenha"
-        style="@style/SafeWalk.TextInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="Senha"
-        app:endIconMode="password_toggle"
-        app:endIconTint="@color/sw_text_secondary"
-        app:layout_constraintTop_toBottomOf="@id/tlTelefone"
-        app:startIconDrawable="@drawable/ic_lock"
-        app:startIconTint="@color/sw_text_secondary">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTelefone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/sw_text_primary"
+                android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etSenha"
+        <!-- Campo Senha -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlSenha"
+            style="@style/SafeWalk.TextInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/sw_text_primary"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="14dp"
+            android:hint="Senha"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/sw_text_secondary"
+            app:layout_constraintTop_toBottomOf="@id/tlTelefone"
+            app:startIconDrawable="@drawable/ic_lock"
+            app:startIconTint="@color/sw_text_secondary">
 
-    <!-- Botao Entrar: amarelo vibrante, texto escuro -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
-        android:text="Entrar"
-        android:textColor="@color/sw_text_on_accent"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:backgroundTint="@color/sw_accent"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        app:cornerRadius="16dp"
-        app:layout_constraintTop_toBottomOf="@id/tlSenha" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/sw_text_primary"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Link para cadastro -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCadastrar"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Não tem uma conta? Cadastre-se"
-        android:textColor="@color/sw_accent"
-        app:layout_constraintTop_toBottomOf="@id/btnLogin" />
+        <!-- Botao Entrar (Cidadão) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:text="Entrar"
+            android:textColor="@color/sw_text_on_accent"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/sw_accent"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:cornerRadius="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tlSenha" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Divisor com rotulo -->
+        <LinearLayout
+            android:id="@+id/dividerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/btnLogin">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/sw_border" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:text="GESTÃO URBANA"
+                android:textColor="@color/sw_text_hint"
+                android:textSize="11sp"
+                android:letterSpacing="0.08"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/sw_border" />
+        </LinearLayout>
+
+        <!-- Botao Login Pre-selecionado: Prefeitura Municipal -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLoginPrefeitura"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="14dp"
+            android:text="Acesso Prefeitura (Pré-selecionado)"
+            android:textColor="@color/sw_accent"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:strokeColor="@color/sw_accent"
+            app:strokeWidth="1.5dp"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_governo"
+            app:iconTint="@color/sw_accent"
+            app:iconGravity="textStart"
+            app:layout_constraintTop_toBottomOf="@id/dividerLayout" />
+
+        <!-- Link para cadastro -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCadastrar"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp"
+            android:text="Não tem uma conta? Cadastre-se"
+            android:textColor="@color/sw_text_secondary"
+            app:layout_constraintTop_toBottomOf="@id/btnLoginPrefeitura"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

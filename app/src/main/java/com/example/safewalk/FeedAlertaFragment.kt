@@ -3,6 +3,7 @@ package com.example.safewalk
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.fragment.app.Fragment
@@ -22,8 +23,8 @@ import kotlinx.coroutines.launch
 /**
  * FeedAlertaFragment — Tela principal com a lista de alertas.
  *
- * Utiliza o layout refinado com header flutuante escuro,
- * bottom navigation dock e FAB amarelo vibrante.
+ * Exibe a lista de chamados de infraestrutura urbana, adaptando a experiência
+ * caso o usuário autenticado seja um Cidadão ou a equipe oficial da Prefeitura.
  */
 class FeedAlertaFragment : Fragment(R.layout.fragment_feed_alertas) {
 
@@ -32,7 +33,8 @@ class FeedAlertaFragment : Fragment(R.layout.fragment_feed_alertas) {
             AlertaRepository(
                 AppDatabase.getInstance(requireContext()).alertaDao()
             ),
-            SessionManager.usuarioLogadoId!!
+            SessionManager.usuarioLogadoId ?: 0,
+            SessionManager.isPrefeitura
         )
     }
 
@@ -46,10 +48,17 @@ class FeedAlertaFragment : Fragment(R.layout.fragment_feed_alertas) {
             return
         }
 
+        // Configuração da lista de alertas com ação de clique
         adapter = AlertaAdapter { alerta ->
-            val detalheSheet = DetalheAlertaBottomSheet.newInstance(alerta) { alertaId ->
-                viewModel.confirmarAlerta(alertaId)
-            }
+            val detalheSheet = DetalheAlertaBottomSheet.newInstance(
+                alerta = alerta,
+                onConfirmar = { alertaId ->
+                    viewModel.confirmarAlerta(alertaId)
+                },
+                onResolver = { alertaId ->
+                    viewModel.encerrarAlerta(alertaId)
+                }
+            )
             detalheSheet.show(childFragmentManager, "DetalheAlertaBottomSheet")
         }
 
@@ -57,30 +66,38 @@ class FeedAlertaFragment : Fragment(R.layout.fragment_feed_alertas) {
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = adapter
 
-        // Botão de logout no header flutuante
-        val btnLogout = view.findViewById<ImageButton>(R.id.btnLogout)
+        // Identificação visual no header flutuante de acordo com o perfil
+        val tvSubtitleHeader = view.findViewById<TextView>(R.id.tvSubtitleHeader)
+        val ivHeaderLogo = view.findViewById<ImageView>(R.id.ivHeaderLogo)
 
-        // FAB de criar alerta
-        val btnCriar = view.findViewById<FloatingActionButton>(R.id.btnCriar)
-
-        // Aba "Mapa" na bottom navigation dock
-        // O btnMapa agora é um TextView dentro da tab, mas o ID é mantido
-        val btnMapa = view.findViewById<TextView>(R.id.btnMapa)
-
-        btnCriar.setOnClickListener {
-            findNavController()
-                .navigate(R.id.action_feedAlertasFragment_to_criarAlertaFragment)
+        if (SessionManager.isPrefeitura) {
+            tvSubtitleHeader?.text = "Prefeitura (Gestão Urbana)"
+            ivHeaderLogo?.setImageResource(R.drawable.ic_governo)
+        } else {
+            tvSubtitleHeader?.text = "Alertas Comunitários"
+            ivHeaderLogo?.setImageResource(R.drawable.ic_safewalk_logo)
         }
 
+        // Botão de logout no header
+        val btnLogout = view.findViewById<ImageButton>(R.id.btnLogout)
         btnLogout.setOnClickListener {
-            SessionManager.usuarioLogadoId = null
+            SessionManager.logout()
             findNavController().navigate(R.id.loginFragment)
         }
 
+        // FAB de criar alerta
+        val btnCriar = view.findViewById<FloatingActionButton>(R.id.btnCriar)
+        btnCriar.setOnClickListener {
+            findNavController().navigate(R.id.action_feedAlertasFragment_to_criarAlertaFragment)
+        }
+
+        // Aba "Mapa" na bottom navigation dock
+        val btnMapa = view.findViewById<TextView>(R.id.btnMapa)
         btnMapa.setOnClickListener {
             findNavController().navigate(R.id.mapHeatFragment)
         }
 
+        // Coleta reativa da lista de alertas
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.alertas.collect {
                 adapter.submitList(it)

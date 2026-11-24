@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.safewalk.database.db.entity.AlertaInfraestrutura
+import com.example.safewalk.session.SessionManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class DetalheAlertaBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var alerta: AlertaInfraestrutura
     var onConfirmarListener: ((Int) -> Unit)? = null
+    var onResolverListener: ((Int) -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +33,23 @@ class DetalheAlertaBottomSheet : BottomSheetDialogFragment() {
         view.findViewById<TextView>(R.id.txtConfirmacoes)
             .text = "Confirmações: ${alerta.confirmacoes}"
         view.findViewById<TextView>(R.id.txtStatus)
-            .text = alerta.status.name
+            .text = "Status: ${alerta.status.name}"
 
         val btnConfirmar = view.findViewById<View>(R.id.btnConfirmarAlerta)
         btnConfirmar?.setOnClickListener {
             onConfirmarListener?.invoke(alerta.id)
             dismiss()
+        }
+
+        val btnResolver = view.findViewById<View>(R.id.btnResolverAlertaPrefeitura)
+        if (SessionManager.isPrefeitura) {
+            btnResolver?.visibility = View.VISIBLE
+            btnResolver?.setOnClickListener {
+                onResolverListener?.invoke(alerta.id)
+                dismiss()
+            }
+        } else {
+            btnResolver?.visibility = View.GONE
         }
 
         return view
@@ -45,13 +58,15 @@ class DetalheAlertaBottomSheet : BottomSheetDialogFragment() {
     companion object {
         fun newInstance(
             alerta: AlertaInfraestrutura,
-            onConfirmar: ((Int) -> Unit)? = null
+            onConfirmar: ((Int) -> Unit)? = null,
+            onResolver: ((Int) -> Unit)? = null
         ): DetalheAlertaBottomSheet {
             val fragment = DetalheAlertaBottomSheet()
             val args = Bundle()
             args.putSerializable("alerta", alerta)
             fragment.arguments = args
             fragment.onConfirmarListener = onConfirmar
+            fragment.onResolverListener = onResolver
             return fragment
         }
     }
