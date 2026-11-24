@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
+import android.view.ViewTreeObserver
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -72,6 +73,7 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
     private var latitudeSelecionada: Double? = null
     private var longitudeSelecionada: Double? = null
     private var cancelamentoGps: CancellationTokenSource? = null
+    private var ouvinteTeclado: ViewTreeObserver.OnGlobalLayoutListener? = null
 
     // Lista padronizada de ocorrências típicas de infraestrutura urbana municipal (frases claras e sem barras '/')
     private val problemasInfraestrutura = listOf(
@@ -243,18 +245,44 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
 
     private fun ajustarParaTeclado(raiz: View) {
         val paddingInferiorOriginal = raiz.paddingBottom
+        var barraNavegacao = 0
+        var tecladoPorInsets = 0
 
-        ViewCompat.setOnApplyWindowInsetsListener(raiz) { v, insets ->
-            val tecladoOuBarra = insets.getInsets(
-                WindowInsetsCompat.Type.ime() or WindowInsetsCompat.Type.navigationBars()
-            ).bottom
-            v.updatePadding(bottom = paddingInferiorOriginal + tecladoOuBarra)
+        fun aplicar() {
+            if (view == null) return
+            val teclado = maxOf(tecladoPorInsets, alturaTecladoSobreTela(raiz))
+            val alvo = paddingInferiorOriginal + maxOf(teclado, barraNavegacao)
+            if (raiz.paddingBottom == alvo) return
 
-            if (insets.isVisible(WindowInsetsCompat.Type.ime()) && etEndereco.hasFocus()) {
-                v.post { mostrarCampoEndereco() }
+            raiz.updatePadding(bottom = alvo)
+            if (teclado > 0 && etEndereco.hasFocus()) {
+                raiz.post { mostrarCampoEndereco() }
             }
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(raiz) { _, insets ->
+            barraNavegacao = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            tecladoPorInsets = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+            aplicar()
             insets
         }
+
+        val ouvinte = ViewTreeObserver.OnGlobalLayoutListener { aplicar() }
+        raiz.viewTreeObserver.addOnGlobalLayoutListener(ouvinte)
+        ouvinteTeclado = ouvinte
+    }
+
+    private fun alturaTecladoSobreTela(raiz: View): Int {
+        val areaVisivel = Rect()
+        raiz.getWindowVisibleDisplayFrame(areaVisivel)
+
+        val posicao = IntArray(2)
+        raiz.getLocationOnScreen(posicao)
+        val baseDaTela = posicao[1] + raiz.height
+
+        val sobreposicao = baseDaTela - areaVisivel.bottom
+        val minimoParaSerTeclado = raiz.rootView.height * 0.15
+        return if (sobreposicao > minimoParaSerTeclado) sobreposicao else 0
     }
 
     private fun mostrarCampoEndereco() {
@@ -375,6 +403,8 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
     }
 
     override fun onDestroyView() {
+        ouvinteTeclado?.let { view?.viewTreeObserver?.removeOnGlobalLayoutListener(it) }
+        ouvinteTeclado = null
         cancelamentoGps?.cancel()
         cancelamentoGps = null
         super.onDestroyView()
