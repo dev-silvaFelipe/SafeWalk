@@ -3,6 +3,7 @@ package com.example.safewalk
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -14,7 +15,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -159,6 +163,12 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
             }
         }
 
+        etEndereco.setOnFocusChangeListener { _, focado ->
+            if (focado) view.post { mostrarCampoEndereco() }
+        }
+
+        ajustarParaTeclado(view)
+
         usarLocalizacaoAtual()
 
         btnSalvar.setOnClickListener {
@@ -229,6 +239,30 @@ class CriarAlertaFragment : Fragment(R.layout.fragment_alerta) {
         R.id.chipEsgoto -> TipoAlerta.ESGOTO
         R.id.chipVazamento -> TipoAlerta.VAZAMENTO
         else -> TipoAlerta.OUTRO
+    }
+
+    private fun ajustarParaTeclado(raiz: View) {
+        val paddingInferiorOriginal = raiz.paddingBottom
+
+        ViewCompat.setOnApplyWindowInsetsListener(raiz) { v, insets ->
+            val tecladoOuBarra = insets.getInsets(
+                WindowInsetsCompat.Type.ime() or WindowInsetsCompat.Type.navigationBars()
+            ).bottom
+            v.updatePadding(bottom = paddingInferiorOriginal + tecladoOuBarra)
+
+            if (insets.isVisible(WindowInsetsCompat.Type.ime()) && etEndereco.hasFocus()) {
+                v.post { mostrarCampoEndereco() }
+            }
+            insets
+        }
+    }
+
+    private fun mostrarCampoEndereco() {
+        if (view == null || !grupoEndereco.isVisible) return
+        btnBuscarEndereco.requestRectangleOnScreen(
+            Rect(0, 0, btnBuscarEndereco.width, btnBuscarEndereco.height),
+            false
+        )
     }
 
     private fun modoEndereco(): Boolean = toggleLocal.checkedButtonId == R.id.btnLocalEndereco
