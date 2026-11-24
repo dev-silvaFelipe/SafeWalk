@@ -1,3 +1,10 @@
+import java.util.Properties
+
+val localProperties = Properties().apply {
+    val arquivo = rootProject.file("local.properties")
+    if (arquivo.exists()) arquivo.inputStream().use { load(it) }
+}
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -18,6 +25,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            "String",
+            "MAPTILER_KEY",
+            "\"${localProperties.getProperty("MAPTILER_KEY", "").trim('"')}\""
+        )
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
